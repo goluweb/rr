@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  .chosen-container-multi .chosen-choices{
+    height: 45px !important;
+  }
+  .chosen-container-multi{
+    width:100% !important;
+    
+  }
+  .chosen-choices{
+    border:1px solid #e8eff9 !important;
+   
+  }
+.heignt_assign{
+  height: 30px !important;
+}
+  .padding-assign{
+    margin-top: 20px;
+  }
+
+  .notification-count3 {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.2rem;
+  border-radius: 50%;
+}
+
+.dropdown-menu3 {
+  border: none;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.dropdown-header3 {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #888;
+}
+
+    </style>
+    
+<% path='http://localhost:3000/' %>
+
+
+<!-- Mirrored from www.bootstrapdash.com/demo/celestial-free/template/pages/charts/chartjs.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 22 Oct 2022 06:01:15 GMT -->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Jigsaw LMS Admin CRM</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="<%= path %>/assets/admin/vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="<%= path %>/assets/admin/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<%= path %>/assets/admin/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="<%= path %>/assets/admin/images/jigsaw_logo.jpg" />
+
+  <!----upper link start---->
+
+<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+<!----Upper links end---------------------->
+
+</head>
+
+<style>
+  .required_{
+    color:red
+  }
+  .icon-container {
+    
+      position: relative;
+    }
+
+    .icon {
+      position: absolute;
+    
+      animation: spin 4s infinite linear;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href="">
+          <img style="max-width: 60%;
+          height: 52px;"  src="<%= path %>/assets/admin/images/jigsaw_logo.jpg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo-mini" href="javascript:void(0)"><img src="<%= path %>/assets/admin/images/jigsaw_logo.jpg" alt="logo"/></a>
+          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <ul class="navbar-nav mr-lg-2">
+            <!-- <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="#">
+                Calendar
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link active" href="#">
+                Statistic
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="#">
+                Employee
+              </a>
+            </li> -->
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+
+            <li class="nav-item nav-profile dropdown">
+              <% if(inArray(locals.usersession.roles_id.permission,'addAtten')){ %>
+              <% if(typeof locals.attendance !== 'undefined' && locals.attendance !== null){ %>
+             
+             <% if(locals.attendance == 'login_attendance'){ %>          
+                <a href="/attendance/update" class="nav-link dropdown-toggle icon-container" title="attendance SignOut" style="cursor:pointer;padding-right: 35px;
+                padding-bottom: 37px;"  role="button" >
+                <i class="fa fa-hourglass-start icon" aria-hidden="true"></i>
+              </a>
+            <% }else if(locals.attendance == 'logout_attendance'){ %>
+           
+                <a class="nav-link dropdown-toggle" onclick="alert('your today attendance is already submitted')"  title="attendance SignIn" style="cursor:pointer"  role="button" href="javascript:void()" >
+                  <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                </a>
+  
+               <% } else if(locals.attendance == 'absents'){ %>
+
+                  <a class="nav-link dropdown-toggle" onclick="add_attendance()"  title="attendance SignIn" style="cursor:pointer"  role="button" >
+                    <i class="fa fa-hourglass-start" aria-hidden="true"></i>
+                  </a>
+                  <%}%>
+
+                  <% } %>
+                  <% } %>
+              <% if(inArray(locals.usersession.roles_id.permission,'viewTodo')){ %>
+              <a class="nav-link dropdown-toggle" title="Daily Task Add Here" style="cursor:pointer" data-toggle="modal" data-target="#exampleModaltasksubmit" role="button" >
+                <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+              </a>
+              <% } %>
+
+
+
+              <div  class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
+                <div class="dropdown-header">
+                  <h6 class="text-uppercase mb-0">Notifications</h6>
+                </div>
+                <div class="dropdown-divider"></div> 
+                <% locals.tasks.forEach(data =>{ %>
+                <a class="dropdown-item" href="/task/view_task/<%= data._id %>">
+                 
+                  <div class="notification-content"><b>task <% if(typeof data.assign_by !=='undefined' && data.assign_by !== null){ %><span>assing by   <%= data.assign_by.name %></span>  <% } %></b><br>
+                    <i class="fa fa-check-circle text-success"></i>
+                    <% 
+                      const myString = data.task  ;
+                      const words = myString.split(' ');
+                      const limit = 10;
+                      const limitedString = words.slice(0, limit).join(' ');
+                    %>
+                          
+                    <span class="notification-text"><%= limitedString %> .</span>
+                    <span class="notification-time"><%= data.added_on.toLocaleString('default',{day:'numeric',month:'long'}) %></span>
+                  </div>
+                </a>
+               
+                <div class="dropdown-divider"></div>
+                <% }) %>
+                <a class="dropdown-item text-center" href="/task/show_task">View All</a>
+              </div>
+              <% const count = Object.keys(locals.tasks).length; %>
+            
+              <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i style="margin: -8px;" class="fa fa-bell-o" aria-hidden="true"></i>
+              <span style="padding:4px !important; margin: 0px !important; margin-bottom: 8px;" class="badge badge-danger notification-count"><%= count %></span>
+              </a>
+
+              <a class="nav-link dropdown-toggle  pl-0 pr-0" href="/admin/logout" onclick = "if (! confirm('are you sure you want to logout?')) { return false; }">
+                <i class="typcn typcn-user-outline mr-0"></i>
+                <span class="nav-profile-name"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown5">
+               
+                <a href="{{url('admin/logout')}}" class="dropdown-item">
+                <i class="typcn typcn-power text-primary"></i>
+                Logout
+                </a>
+              </div>
+
+
+             
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+      </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <% if(inArray(locals.usersession.roles_id.permission,'addTask')){ %>
+          <div id="settings-trigger" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModalLong" ><i class="fa fa-pencil" aria-hidden="true"></i></div>
+          <% } %>
+          <!-- <div class="settings-panel">
+            <i class="settings-close typcn typcn-delete-outline"></i>
+            <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options" id="sidebar-light-theme">
+              <div class="img-ss rounded-circle bg-light border mr-3"></div>
+              Light
+            </div>
+            <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
+              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+              Dark
+            </div>
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-0 px-4">
+              <div class="tiles success"></div>
+              <div class="tiles warning"></div>
+              <div class="tiles danger"></div>
+              <div class="tiles primary"></div>
+              <div class="tiles info"></div>
+              <div class="tiles dark"></div>
+              <div class="tiles default border"></div>
+            </div>
+          </div> -->
+        </div>
+      <!-- partial -->
+
+
+       <!-- Modal -->
+       <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form action="/task/add_task" method="post" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Assign Task</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+               <div class="row">
+            
+               <div class="col-md-12">
+                    <input type="text" class="form-control" name="task" id="inputName" placeholder="Enter Task" required>
+                </div>
+            
+      
+              
+                <div class="col-md-6 padding-assign">
+                      <label>From <span class="required_">*</span></label>
+                      <input type="date" class="form-control " name="from" id="inputName" placeholder="Enter Task" required>
+                </div>
+              
+      
+                <div class="col-md-6 padding-assign">
+                  <label>To <span class="required_">*</span></label>
+                    <input type="date" class="form-control " name="to" id="inputName" placeholder="Enter Task" required>
+                  </div>
+      
+                  <div class="col-md-6 padding-assign">
+                    <label>Assign Task to User.<span class="required_">*</span></label>
+                        <select type="text" class="form-control chosen-select " name="assign_task" id="inputName" multiple >
+                           
+                            
+                            <option value="">-select users-</option>
+                            <% locals.users.forEach(data =>{ %>
+                            <option value="<%= data._id %>"><%= data.name %></option>
+                            <% }) %>
+                            
+                        </select>
+                    </div>
+      
+                    <div class="col-md-6 padding-assign">
+                      <label>Add Status.<span class="required_">*</span></label>
+                          <select type="text" class="form-control " name="task_status" id="inputName" style="height: 45px;">
+                             
+                              
+                              <option value="">-select status-</option>
+                            
+                              <option value="fresh">Fresh Task</option>
+                              <option value="process">On Process</option>
+                              <option value="hold">On Hold</option>
+                              <option value="Complete">Complete</option>
+                             
+                              
+                          </select>
+                      </div>
+      
+                      
+                  <div class="col-md-6 padding-assign">
+                    <label>Select Task Priority.<span class="required_">*</span></label>
+                        <select type="text" style="height: 47px;" class="form-control " name="priority" id="inputName"  >
+                           
+                            
+                            <option value="low">low</option>
+                            <option value="medium">medium</option>
+                            <option value="urgent">urgent</option>
+                            
+                        </select>
+                    </div>
+                    <div class="col-md-6 padding-assign">
+                      <label>Attachments.<span class="required_"></span></label>
+                      <input type="file" class="form-control " name="attachment" id="inputName">
+                </div>
+        
+      
+                    <div class="col-md-12 padding-assign">
+                      
+                        <textarea type="date" class="form-control " name="discription" id="inputName" placeholder="Enter Discription" required></textarea>
+                      </div>
+             
+                  </div>
+                </div>
+            
+            <div class="modal-footer">
+              
+              <button type="submit" class="btn btn-primary">Assign Task</button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!-- //////////////////////////////// -->
+      
+<!-- Modal -->
+<div class="modal fade" id="exampleModaltasksubmit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Submit Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+          <form action="/todo/add_todo" method="post" enctype="multipart/form-data">
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="task-type">Task Type:</label>
+            <select name="task" class="form-control" id="task-type">
+              <option value="">-select task-</option>
+              <% locals.uncompliteTAsk.forEach(task=>{ %>
+                <% 
+                const myString_todo = task.task  ;
+                const words_todo = myString_todo.split(' ');
+                const limit_todo = 10;
+                const task_todo = words_todo.slice(0, limit_todo).join(' ');
+              %>
+              <option value="<%= task._id %>"><%= task_todo %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="task-file">Task File:</label>
+            <input type="file" name="file" class="form-control-file" id="task-file">
+          </div>
+          <div class="form-group">
+            <label for="task-description">Task Description:</label>
+            <textarea name="description" class="form-control" id="task-description" rows="3" required></textarea>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- /////end model/////////// -->
+
+      
+      <!-- partial:../../partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <div class="d-flex sidebar-profile">
+              <div class="sidebar-profile-image">
+                <img src="<%= path %>/assets/admin/images/jigsaw_logo.jpg" alt="image">
+                <span class="sidebar-status-indicator"></span>
+              </div>
+              <div class="sidebar-profile-name">
+                <p class="sidebar-name">  
+              <%=  locals.usersession.name %>
+                </p>
+                <p class="sidebar-designation">
+                  Welcome
+                </p>
+              </div>
+            </div>
+
+       
+
+            <!-- <div class="nav-search">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="search">
+                    <i class="typcn typcn-zoom"></i>
+                  </span>
+                </div>
+              </div>
+            </div> -->
+
+            <p class="sidebar-menu-title">Dash menu</p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/dashboard">
+              <i class="typcn typcn-device-desktop menu-icon"></i>
+              <span class="menu-title">Profile <span class="badge badge-primary ml-3"></span></span>
+            </a>
+          </li>
+
+          
+
+          <% if(inArray(locals.usersession.roles_id.permission,'viewRole')  || inArray(locals.usersession.roles_id.permission,'viewUser')){ %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-briefcase menu-icon"></i>
+              <span class="menu-title">Roles & Permission</span>
+              <i class="typcn typcn-chevron-right menu-arrow"></i>
+            </a>
+      
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu"> 
+              
+               <% if(inArray(locals.usersession.roles_id.permission,'viewRole')){ %>
+              <li class="nav-item"> <a class="nav-link" href="/dashboard/show_roles">Roles</a></li>
+              <% } %>
+
+              <% if(inArray(locals.usersession.roles_id.permission,'viewUser')){ %>
+              <li class="nav-item"> <a class="nav-link" href="/users/show_users">Users</a></li>
+              <% } %>
+              
+              </ul>
+            </div>
+          </li>
+          <% } %>
+
+
+          
+          <% if(inArray(locals.usersession.roles_id.permission,'viewTask') || inArray(locals.usersession.roles_id.permission,'viewTodo') || inArray(locals.usersession.roles_id.permission,'viewAtten') ){ %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#task" aria-expanded="false" aria-controls="task">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">HRM Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="task">
+              <ul class="nav flex-column sub-menu">
+                <% if(inArray(locals.usersession.roles_id.permission,'viewTask')){ %>
+                <li class="nav-item"><a class="nav-link" href="/task/show_task">Task</a></li>
+                <% } %>
+                <% if(inArray(locals.usersession.roles_id.permission,'viewTodo')){ %>
+                <li class="nav-item"><a class="nav-link" href="/todo/show_todo">To Do</a></li>
+                <% } %>
+                <% if(inArray(locals.usersession.roles_id.permission,'viewAtten')){ %>
+                <li class="nav-item"><a class="nav-link" href="/attendance/show_attendance">Attendance</a></li>
+                <% } %>
+                
+              </ul>
+            </div>
+          </li>
+          <% } %>
+
+
+          <% if(inArray(locals.usersession.roles_id.permission,'viewCourse')  || inArray(locals.usersession.roles_id.permission,'viewLevel') || inArray(locals.usersession.roles_id.permission,'viewChapter')){ %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#slider" aria-expanded="false" aria-controls="slider">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Course Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="slider">
+              <ul class="nav flex-column sub-menu">
+                <% if(inArray(locals.usersession.roles_id.permission,'viewCourse')){ %>
+                <li class="nav-item"><a class="nav-link" href="/course/show_course">Courses</a></li>
+                <% } %>
+
+                <li class="nav-item"><a class="nav-link" href="/payment/show_payment">Course fee</a></li>
+
+                <li class="nav-item"><a class="nav-link" href="/payment/coupons">Coupons</a></li>
+
+
+                <% if(inArray(locals.usersession.roles_id.permission,'viewLevel')){ %>
+                <li class="nav-item"><a class="nav-link" href="/level/show_level">Levels</a></li>
+                <% } %>
+                <% if(inArray(locals.usersession.roles_id.permission,'viewChapter')){ %>
+                <li class="nav-item"><a class="nav-link" href="/chapter/show_chapter">Chapters</a></li>
+                <% } %>
+              </ul>
+            </div>
+          </li>
+          <% } %>
+
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#Mcq" aria-expanded="false" aria-controls="Mcq">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">MCQ Test</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="Mcq">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="/mcq/show">MCQ Test</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <% if(inArray(locals.usersession.roles_id.permission,'viewTeacher')){ %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#teacher" aria-expanded="false" aria-controls="teacher">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Teacher Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="teacher">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="/teacher/show_teacher">Teachers</a></li>
+               
+              </ul>
+            </div>
+          </li>
+          <% } %>
+
+          <% if(inArray(locals.usersession.roles_id.permission,'viewStudent')){ %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#student" aria-expanded="false" aria-controls="student">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Student Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="student">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="/student/show_student">Student</a></li>
+                
+              </ul>
+            </div>
+          </li>
+          <% } %>
+
+          <% if(inArray(locals.usersession.roles_id.permission,'viewContact')){ %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#contact" aria-expanded="false" aria-controls="contact">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Contact Request</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="contact">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="/contact/show_request">Contact</a></li>
+               
+              </ul>
+            </div>
+          </li>
+          <% } %>
+ 
+         <!-- <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li>
+        </ul> -->
+        <!-- <ul class="sidebar-legend">
+          <li>
+            <p class="sidebar-menu-title">Category</p>
+          </li>
+          <li class="nav-item"><a href="#" class="nav-link">#Sales</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">#Marketing</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">#Growth</a></li>
+        </ul> -->
+      </nav>
+
+      <!-- //////////////////////////////////////////////////////////////// -->
+    
+      <!-- ///////////////////////////////////////////////////////////////// -->
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+        
+          <script>
+            $(".chosen-select").chosen({
+              no_results_text: "Oops, nothing found!"
+            })
+            </script>   
+            <script>
+
+ function  add_attendance() {
+    var status = prompt("Add Attendance Note");
+ 
+        $.ajax({
+            type: "POST",
+            url: "/attendance/insert",
+            data: { status: status },
+            success: function(response) {
+             
+                window.location.href=response;
+            },
+            error: function(xhr, status, error) {
+                // handle error response from server
+            }
+        });
+    
+}
+
+
+            </script>

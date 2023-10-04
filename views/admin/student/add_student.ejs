@@ -1,0 +1,117 @@
+<%- include ('../layout/header.ejs') %>
+
+<style>
+  .chosen-container-multi .chosen-choices{
+    height: 45px !important;
+  }
+    </style>
+    <!-- <% if(typeof error != 'undefined'){ %>
+    <div style="text-align: center;"><p><%= error %></p></div>
+    <% } %> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+<style>
+   
+</style>
+<div class="row justify-content-center" style="margin:20px">
+						<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<div class="card  box-shadow-0">
+								<div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                                  <h4 class="card-title mb-1">Add Student</h4>
+                                  <a href="/student/show_student" class="btn btn-primary">Back</a>
+								</div>
+                          
+                                <div style="text-align:center;"><p class="popular_job_show"></p></div>
+								<div class="card-body pt-0" >
+									<form  method="post" action="/student/add_student" enctype="multipart/form-data" >
+                              
+										<br>
+
+                                        <div class="row">
+                                    
+                                            <div class="col-md-6">
+                                            <div class="form-group" >
+                                            <label>Student Name <span class="required_">*</span></label>
+											    <input type="text" class="form-control" name="name" id="inputName" placeholder="Enter Student Name" required>
+										    </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" >
+                                                <label>Student Image <span class="required_"></span></label>
+                                                    <input type="file" class="form-control" name="image" id="inputName"  >
+                                                </div>
+                                                </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group" >
+                                            <label>Mobile No. <span class="required_">*</span></label>
+                                                <input type="number" class="form-control" name="mobile" id="inputName" placeholder="Enter Mobile No." required>
+                                            </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" >
+                                                <label>Email ID <span class="required_">*</span></label>
+                                                    <input type="email" class="form-control" name="email" id="inputName" placeholder="Enter Email ID." required>
+                                                </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group" >
+                                                    <label>Password <span class="required_">*</span></label>
+                                                        <input type="text" class="form-control" name="password" id="inputName" placeholder="Enter Password." required>
+                                                    </div>
+                                                    </div>
+    
+                                           
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" >
+                                                            <label>Assign Course.<span class="required_">*</span></label>
+                                                                <select type="text" class="form-control chosen-select" name="assign_course" id="inputName"  multiple >
+                                                                    <option value="">-select subject-</option>
+                                                                    <%  playlist.forEach((course)=>{ %>
+                                                                    <option value="<%= course._id %>"><%= course.playlist %></option>
+                                                                    <% })  %>
+                                                                </select>
+                                                            </div>
+                                                            </div>
+
+                                                            <!-- <div class="col-md-6">
+                                                                <div class="form-group" >
+                                                                <label>No. of year Exprience as Teacher <span class="required_">*</span></label>
+                                                                    <input type="number" class="form-control" name="exprience" id="inputName" placeholder="Enter Exprience." required>
+                                                                </div>
+                                                                </div> -->
+
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group" >
+                                                                    <label>Enter Address <span class="required_">*</span></label>
+                                                                        <textarea type="text" class="form-control" name="address" id="inputName" placeholder="Enter Teacher Exprience." required></textarea>
+                                                                    </div>
+                                                                    </div>
+        
+ 
+                                            <div class="form-group mb-0 mt-3 justify-content-end">
+                                            <div><br>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    
+                                            </div>
+                                            </div>
+                                    
+									</form>
+
+								</div>
+							</div>
+						</div>
+                    </div>
+<script>
+$(".chosen-select").chosen({
+  no_results_text: "Oops, nothing found!"
+})
+</script>
+<%- include ('../layout/footer.ejs') %>
+
+

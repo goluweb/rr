@@ -1,0 +1,171 @@
+
+<%- include ('../layout/header.ejs') %>
+<style>
+    body {
+      background-color: #f7f7f7;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .card-header {
+      background-color: #f8f8f8;
+      border-radius: 10px 10px 0 0;
+      font-weight: bold;
+      padding: 10px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    .card-body p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    .card-body a {
+      color: #007bff;
+    }
+    .card-body a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+    .card-footer {
+      background-color: #f8f8f8;
+      border-radius: 0 0 10px 10px;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+<body>
+
+<div class="container">
+ 
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <p style="color:green">Hello <%= locals.usersession.name %> add your daily task here!</p>
+          <div class="all_btn_section">
+            <% if(inArray(locals.usersession.roles_id.permission,'filterTodo')){ %>
+          <div class="btn-group">
+            <button type="button" style="background-color: #afafaf; border-color: #afafaf ;"  class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select User
+            </button>
+            <div class="dropdown-menu">
+              <% user.forEach(user =>{%>
+                <% if(typeof user.name != 'undefined' && user.name !=null){ %>
+              <a class="dropdown-item" onclick="userFetch('user','<%= user._id %>')"><%= user.name %></a>
+              <% } %>
+              <% }) %>
+                
+            </div>
+          </div>
+          <div class="btn-group ml-2">
+            <button type="button" style="background-color: #afafaf; border-color: #afafaf ;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select Task
+            </button>
+            <div class="dropdown-menu">
+              <% task.forEach(task =>{%>
+                
+                <a class="dropdown-item" onclick="userFetch('task','<%= task._id %>')"><%= task.task %></a>
+                
+                <% }) %>
+            </div>
+          </div>
+          <% } %>
+          <button class="btn btn-primary  ml-2" data-toggle="modal" data-target="#exampleModaltasksubmit"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+ 
+  
+
+    
+       <div class="row  add_filter_data">
+          <% todoTask.forEach(todo =>{%>
+            <div class="col-md-4 mt-3">
+              <div class="card h-100">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-9">
+                      <h5 class="mb-0">
+                      </h5>
+                      <div class="text-sm">
+                  <% if(typeof todo.task_type !== 'undefined' && todo.task_type !==null){%>
+                        <span class="text-muted"><a <% if(todo.task_type.task_status == 'Complete'){ %> style="color:green" <% } %> href="/task/view_task/<%= todo.task_type._id %>" target="_blank" class="text-muted" ><%= todo.task_type.task %></a></span>
+                  <% } %>
+                      </div>
+                    </div>
+                    <div class="col-3 text-end" style="padding-left: 0px;">
+                      <span class="badge " style="background-color: #cccbd9 !important; padding:7px"><%= todo.added_on.toLocaleString('default',{day:'numeric',month:'long'}) %></span>
+                    </div>
+                  </div>
+                  
+                </div>
+                
+                <div class="card-body"><%= todo.discription %></div>
+                   <div class="card-footer" style="    display: flex;
+                   justify-content: space-between;">
+              
+                  <div class="client_name">
+                    <% if(typeof todo.user_id != 'undefined' && todo.user_id !=null){ %>
+                  <span class="text-muted me-2"><%= todo.user_id.name %></span>
+                  <% } %>
+                  </div>
+                    <div>
+                  <!-- <button style="text-align: end;" class="btn btn-sm btn-secondary me-2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> -->
+                  <% if(inArray(locals.usersession.roles_id.permission,'deleteTodo')){ %>
+                  <a style="text-align: end;" onclick = "if (! confirm('are you sure you want to delete this todo?')) { return false; }" href="/todo/delete_todo/<%= todo._id %>" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                  <% } %>
+                </div>
+
+
+                </div>
+                     
+              </div>
+              </div>
+         
+          <% })  %>
+        </div>
+  
+        
+  </div>
+  
+  </body>
+<script>
+  function userFetch(type,id){
+
+
+    $.ajax({
+    type: "POST",
+    url: "/todo/filter",
+    data: { type: type, id:id },
+    beforeSend: function() {
+      $('.add_filter_data').html(' <div class="col-md-12 text-center"><img src="/load.gif" width="100px"></div');
+  },
+    success: function(response) {
+      if(response){
+      $('.add_filter_data').html(response);
+      }else{
+      $('.add_filter_data').html(`<div class="col-md-12 text-center"><h3>Data Not Found!</h3></div>`);
+      }
+    },
+    error: function(error) {
+      console.log("Error sending data:", error);
+    }
+  });
+
+  
+
+  }
+</script>
+
+
+<%- include ('../layout/footer.ejs') %>

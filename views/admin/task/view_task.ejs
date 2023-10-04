@@ -1,0 +1,144 @@
+<%- include ('../layout/header.ejs') %>
+
+<style>
+  .chosen-container-multi .chosen-choices{
+    height: 45px !important;
+  }
+    </style>
+    <!-- <% if(typeof error != 'undefined'){ %>
+    <div style="text-align: center;"><p><%= error %></p></div>
+    <% } %> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+<style>
+   
+</style>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">View Task</h4>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th>Task Title</th>
+                  <td><%= data.task %></td>
+                </tr>
+                <tr>
+                  <th>Task Description</th>
+                  <td><%= data.discription %></td>
+                </tr>
+
+                <tr>
+                  <th>Task Duration</th>
+                  <td>
+                    <span class="badge" style="color:white; background-color: #0000ff80;" ><%=  data.from.toLocaleString('default',{day:'numeric',month:'long',year:'numeric'}) %></span>
+                    to
+                    <span class="badge bg-danger" style="color:white" > <%= data.to.toLocaleString('default',{day:'numeric',month:'long',year:'numeric'})%></span>
+                     
+                    
+                    </td>
+                </tr>
+
+                <tr>
+                  <th>Assigned To</th>
+                  <td>
+                    
+                    <% data.assign_id.forEach(data=>{ %>
+                        <span class="badge bg-success"><%=  data.name %></span><br>
+                    <% })  %>
+                
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <th>Attachments Docs </th>
+                    <td><a href="<%= data.file %>" target="_blank">view <i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+                  </tr> 
+
+                  <tr>
+                    <th>Priority </th>
+                    <td> <span class="badge"<% if(data.type ==='medium'){ style="background-color:orange"}
+                        else if(data.type === 'urgent'){ style="background-color:red" }
+                        else{
+                         style="background-color:green"
+                        }
+                       %> 
+                   style="<%= style %>"><%= data.type %></span></td>
+                  </tr> 
+             
+                  <tr>
+                    <th>Assign By </th>
+                    <% if(typeof data.assign_by !== 'undefined' && data.assign_by !== null ){%>
+                    <td><%= data.assign_by.name %></td>
+                    <% } %>
+                  </tr> 
+
+
+                <tr>
+                  <th>Status</th>
+                  <td>
+
+
+                   
+
+                            <select type="text" class="form-control " name="task_status" id="inputName" onchange="sendData(this.value,'<%= data._id %>')">
+                                
+                                
+                                <option value="">-select status-</option>
+                              
+                                <option  <% if(data.task_status =='fresh'){ %> selected <% } %> value="fresh">Fresh Task</option>
+
+                                <option  <% if(data.task_status == 'process'){ %> selected <% } %> value="process">On Process</option>
+
+                                <option <% if(data.task_status == 'hold'){ %> selected <% } %>  value="hold">On Hold</option>
+
+                                <option <% if(data.task_status == 'Complete'){ %> selected <% } %>  value="Complete">Complete</option>
+                               
+                                
+                            </select>
+                      
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center mt-4">
+              <a href="/task/show_task" class="btn btn-primary">Back to Tasks</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function sendData(value,id){
+
+  $.ajax({
+    type: "POST",
+    url: "/task/update_status",
+    data: { value: value, id:id },
+    success: function(response) {
+      alert(response);
+    },
+    error: function(error) {
+      console.log("Error sending data:", error);
+    }
+  });
+
+    }
+    </script>
+<script>
+$(".chosen-select").chosen({
+  no_results_text: "Oops, nothing found!"
+})
+</script>
+<%- include ('../layout/footer.ejs') %>
+
+

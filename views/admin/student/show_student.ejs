@@ -1,0 +1,136 @@
+
+<%- include ('../layout/header.ejs') %>
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h4 class="card-title"></h4>
+                  <% if(inArray(locals.usersession.roles_id.permission,'addStudent')){ %>
+                  <a href="/student/add_student" style="padding:10px; border-radius:5px" class="btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Student</a>
+                  <% } %>
+               </div>
+                  <p class="card-description">
+                    <!-- Add class <code>.table-bordered</code> -->
+                  </p>
+                  <div class="table-responsive pt-3">
+                    <table class="table table-bordered myTable">
+                         <thead>
+                        <tr>
+                          <th>
+                            Id
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Image
+                          </th>
+                          <th>
+                            Assign Course
+                          </th>
+                          <th>
+                            Mobile
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                          <th>
+                            Password
+                          </th>
+                          <th>
+                            Assign BY
+                          </th>
+                          
+                          <th>
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <%  
+                        i=1; 
+                        student.forEach(function(teacher_d){ 
+                        %>
+                      
+                        <tr>
+                          <td>
+                           <%= i %>
+                          </td>
+                          <td>
+                            <%= teacher_d.name %>
+                          </td>
+
+                          <td>
+                             <%  if(teacher_d.image !=''){ %> 
+                             <img src=" <%= path %><%= teacher_d.image %> " width="100px" >
+                             <% }else{ %>
+                              <p>Image Not Uploaded!</p>
+                             <% } %> 
+                          </td>
+                        
+                          <td style="padding-top:30px">
+                            <% teacher_d.assign_course.forEach(playlist => { %>
+                               <a href="/chapter/show_videos_list/<%= playlist._id %>" target="_blank"><%= playlist.playlist %>&nbsp;&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></a><hr>
+                            <%  }) %>
+                          </td>
+
+                          <td>
+                            <%= teacher_d.mobile %>
+                          </td>
+
+                          <td>
+                            <%= teacher_d.email %>
+                          </td>
+
+                          <td>
+                            <%= teacher_d.password %>
+                          </td>
+                          <td>
+                            <% if(typeof teacher_d.user_id !== 'undefined' && teacher_d.user_id !== null){ %>
+                            <%= teacher_d.user_id.name %>
+                            <% } %>
+                          </td>
+                          
+
+
+                          <td>
+                           
+                            <% if(inArray(locals.usersession.roles_id.permission,'deleteStudent')){ %>
+                         <a href="/student/delete_student/<%= teacher_d._id %>" data-toggle="tooltip" data-placement="top" title="delete Button" onclick = "if (! confirm('are you sure you want to delete this student?')) { return false; }" class="btn btn-primary btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                         <% } %>
+
+                         <% if(inArray(locals.usersession.roles_id.permission,'statusStudent')){ %>
+                         <% if(teacher_d.status == 1){ %>
+
+                          <a href="/student/status_student/<%= teacher_d._id %>/2"  data-toggle="tooltip" data-placement="top" title="Active playlist" class="btn btn-success btn-sm"><i class="fa fa-user" aria-hidden="true"></i></a>
+
+                          <% }else { %>
+
+                            <a href="/student/status_student/<%= teacher_d._id %>/1"  data-toggle="tooltip" data-placement="top" title="disable playlist" class="btn btn-warning btn-sm"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                          <% } %>
+                          <% } %>
+
+                          <% if(inArray(locals.usersession.roles_id.permission,'editStudent')){ %>
+                          <a href="/student/edit_student/<%= teacher_d._id %>" data-toggle="tooltip" data-placement="top" title="edit button" style="background-color:blue" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+<% } %>
+                          </td>
+                        
+                        </tr>
+                       
+                       <%
+                       i++;
+                       });
+                       %>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%- include ('../layout/footer.ejs') %>

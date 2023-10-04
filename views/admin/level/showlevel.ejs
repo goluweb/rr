@@ -1,0 +1,97 @@
+
+<%- include ('../layout/header.ejs') %>
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h4 class="card-title"></h4>
+                  <% if(inArray(locals.usersession.roles_id.permission,'addLevel')){ %>
+                  <a href="/level/addlevel" style="padding:10px; border-radius:5px" class="btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Level</a>
+                  <% }%>
+               </div>
+                  <p class="card-description">
+                    <!-- Add class <code>.table-bordered</code> -->
+                  </p>
+                  <div class="table-responsive pt-3">
+                    <table class="table table-bordered myTable">
+                         <thead>
+                        <tr>
+                          <th>
+                            Id
+                          </th>
+                          <th>
+                            Level
+                          </th>
+                          <th>
+                            Image
+                          </th>
+                          <th>
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <%  
+                        i=1; 
+                        level.forEach(function(level){ 
+                        %>
+                      
+                        <tr>
+                          <td>
+                           <%= i %>
+                          </td>
+                          <td>
+                            <%= level.levelName %>
+                          </td>
+
+                          <td>
+                             <%  if(level.levelImage !=''){ %> 
+                             <img src=" <%= path %><%= level.levelImage %> " width="100px" >
+                             <% }else{ %>
+                              <p>Image Not Uploaded!</p>
+                             <% } %> 
+                          </td>
+                        
+                          <td>
+                           
+                            <% if(inArray(locals.usersession.roles_id.permission,'deleteLevel')){ %>
+                         <a href="/level/delete_level/<%= level._id %>" data-toggle="tooltip" data-placement="top" title="delete Button" onclick = "if (! confirm('are you sure you want to delete this level?')) { return false; }" class="btn btn-primary btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                         <% } %>
+
+
+                         <% if(inArray(locals.usersession.roles_id.permission,'statusLevel')){ %>
+                         <% if(level.status == 1){ %>
+
+                          <a href="/level/status_level/<%= level._id %>/2"  data-toggle="tooltip" data-placement="top" title="Active playlist" class="btn btn-success btn-sm"><i class="fa fa-user" aria-hidden="true"></i></a>
+
+                          <% }else { %>
+
+                            <a href="/level/status_level/<%= level._id %>/1"  data-toggle="tooltip" data-placement="top" title="disable playlist" class="btn btn-warning  btn-sm"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                          <% } %>
+                          <% } %>
+
+                          <% if(inArray(locals.usersession.roles_id.permission,'editLevel')){ %>
+                          <a href="/level/edit_level/<%= level._id %>" data-toggle="tooltip" data-placement="top" title="edit button" style="background-color:blue" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                          <% } %>
+
+                          </td>
+                        
+                        </tr>
+                       
+                       <%
+                       i++;
+                       });
+                       %>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%- include ('../layout/footer.ejs') %>

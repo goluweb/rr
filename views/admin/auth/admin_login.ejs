@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.bootstrapdash.com/demo/celestial-free/template/pages/samples/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 22 Oct 2022 06:01:16 GMT -->
+<head>
+ 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Jigsaw LMS Admin Login</title>
+  
+  <link rel="stylesheet" href="../assets/admin/vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../assets/admin/vendors/css/vendor.bundle.base.css">
+<!-- jd -->
+  <link rel="stylesheet" href="../assets/admin/css/vertical-layout-light/style.css">
+  
+  <link rel="shortcut icon" href="../assets/admin/images/jigsaw_logo.jpg" />
+
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <!-- <div class="brand-logo">
+                <img width="100px" height="100px" src="{{asset('admin_panel_asset/images/jigsaw_logo.jpg')}}" alt="logo">
+              </div> -->
+              <% if ( messages != '') { %>
+            <div style="text-align: center;"><p> <%= messages %></p></div>
+              <% } %>
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
+    
+              <form  class="pt-3" method="post" action="admin/login">
+            
+                <div class="form-group">
+                  <input type="text" name="email" value="" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="password" class="form-control form-control-lg"  id="myInput" value="" placeholder="Password" required>
+                </div>
+                
+                <input style="padding-top:10px !important" type="checkbox"  onclick="myFunction()">Show Password
+                <div class="mt-3">
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                  <div class="form-check">
+                    <!-- <label class="form-check-label text-muted">
+                      <input type="checkbox" class="form-check-input">
+                      Keep me signed in
+                    </label> -->
+                  </div>
+                  <!-- <a href="#" class="auth-link text-black">Forgot password?</a> -->
+                </div>
+                <!-- <div class="mb-2">
+                  <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                    <i class="typcn typcn-social-facebook-circular mr-2"></i>Connect using facebook
+                  </button>
+                </div> -->
+                <!-- <div class="text-center mt-4 font-weight-light">
+                  Dont have an account? <a href="register.html" class="text-primary">Create</a>
+                </div> -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- base:js -->
+
+
+
+  <!-- endinject -->
+</body>
+
+
+<!-- Mirrored from www.bootstrapdash.com/demo/celestial-free/template/pages/samples/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 22 Oct 2022 06:01:16 GMT -->
+</html>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>

@@ -1,0 +1,289 @@
+<%- include ('../layout/header.ejs') %>
+<style>
+   html body .label-info {
+   background: #01b2ac !important;
+   }
+</style>
+<!-- <% if(typeof error != 'undefined'){ %>
+   <div style="text-align: center;"><p><%= error %></p></div>
+   <% } %> -->
+  
+<div class="row justify-content-center" style="margin:20px">
+    <form  method="post" action="/chapter/editchapter/<%= playlist._id %>" enctype="multipart/form-data" >
+<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+  
+   
+    <div class="card  box-shadow-0">
+      <div class="card-header d-flex justify-content-between" style="padding-top:15px">
+         <h4 class="card-title mb-1">Add PlayLIst Details</h4>
+         <a href="/chapter/show_chapter" class="btn btn-primary">Back</a></div>   
+        <div class="card-body pt-0" >
+            <br>
+            <div class="row">
+               <div class="col-md-4">
+                  <div class="form-group" >
+                     <label>Select Course <span class="required_">*</span></label>
+                     <select class="form-control" name="course_id" id="inputName" style="height:47px" required>
+                        <option value="">-select course-</option>
+                        <% course.forEach(function(course){ %>
+                        <option <% if(playlist.course_id._id.equals(course._id)){ %>selected<% } %>
+                             value="<%= course._id %>"><%= course.courseName %></option>
+                        <% }) %>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="form-group" >
+                     <label>Select level <span class="required_">*</span></label>
+                     <select class="form-control" name="level_id" id="inputName" style="height:47px"  required>
+                        <option value="">-select level-</option>
+                        <% lavel.forEach(function(lavel){ %>
+                        <option  <% if(playlist.level_id._id.equals(lavel._id)){ %>selected<% } %> value="<%= lavel._id %>"><%= lavel.levelName %></option>
+                        <% }) %>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="form-group" >
+                     <label>PlayList Name<span class="required_">*</span></label>
+                     <input type="text" class="form-control" value="<%= playlist.playlist %>" name="playlist" id="inputName" placeholder="Enter PlayList Name" required>
+                  </div>
+               </div>
+               <div class="col-md-3">
+                  <div class="form-group" >
+                     <label>PlayList Thumbnail<span class="required_">*</span></label>
+                     <input type="file" class="form-control" name="thumbnail" id="inputName" >
+                     <image src="<%= playlist.thumbnail %>" width="100px">
+                  </div>
+               </div>
+               
+               <div class="col-md-3">
+                  <div class="form-group" >
+                     <label>Start Date & time<span class="required_">*</span></label>
+                     <input type="datetime-local"  value="<%=  playlist.startDate.toISOString().slice(0,16) %>" class="form-control" name="startDate" id="inputName" required>
+                  </div>
+               </div>
+               <div class="col-md-3">
+                  <div class="form-group" >
+                     <label>End Date & time<span class="required_">*</span></label>
+                     <input type="datetime-local" value="<%=  playlist.endDate.toISOString().slice(0,16) %>" class="form-control" name="endDate" id="inputName" required>
+                  </div>
+               </div>
+               <div class="col-md-3">
+                  <label>Mode<span class="required_">*</span></label>
+                  <select class="form-control" name="mode_playlist" id="inputName" style="height:47px"  required>
+                     <option  value="">-select mode-</option>
+                     <option <% if(playlist.mode_playlist.equals('live')){ %>selected<% } %> value="live">Live</option>
+                     <option <% if(playlist.mode_playlist.equals('upload')){ %>selected<% } %>  value="upload">Upload</option>                     
+                  </select>
+               </div>
+
+               <div class="col-md-12">
+                  <div class="form-group" >
+                     <label>Playlist Discription<span class="required_">*</span></label>
+                     <textarea type="datetime-local" class="form-control" name="play_List_discription" id="inputName" required><%=  playlist.play_List_discription %></textarea>
+                  </div>
+               </div>
+                 
+                  </div>
+                </div>
+              </div>
+<!-- ///////////////////////////// -->
+<% playlist.chapters.forEach((chapter)=>{%>
+              <br>
+              <input type="hidden" value="<%= chapter._id%>" name="chapter_id[]">
+              <div class="card  box-shadow-0">
+                <div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                   <h4 class="card-title mb-1">Lession</h4>
+                  </div>   
+                  <div class="card-body pt-0" >
+                      <br>
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                               <label>Chapter Name<span class="required_">*</span></label>
+                               <input type="text" class="form-control" value="<%= chapter.chapter_name %>" name="chapter_name[]" id="inputName" placeholder="Enter Chapter Name" required>
+                            </div>
+                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group" >
+                               <label>Discription<span class="required_">*</span></label>
+                               <textarea type="text" class="form-control" name="chapterDscription[]" id="inputName" placeholder="Enter Discription Name" required><%= chapter.chapterDscription %></textarea>
+                            </div>
+                         </div>
+                         <div class="col-md-6">
+                            <div class="form-group" >
+                               <label>Upload Notes (related to Lession)<span class="required_"> *</span></label>
+                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple >
+                               <a href="<%= chapter.notes %>" target="_blank">View Notes</a>
+                               <input type="hidden" value="<%= chapter.notes %>" name="notes_hidden[]">
+                            </div>
+                         </div>
+                         <div class="col-md-6">
+                            <div class="form-group" >
+                               <label>select Mode<span class="required_">*</span></label>
+                               <select class="form-control" onchange="uploadVideo(this.value,'unique_0')" name="mode[]" id="" style="height: 47px;" required>
+                                <option value="">-select mode-</option> 
+                                <option <% if(chapter.mode ==='live'){ %> selected <% } %> value="live">live</option>
+                                <option  <% if(chapter.mode ==='upload'){ %> selected <% } %>  value="upload">upload</option>
+
+                                </select>
+                            </div>
+                         </div>
+
+                         <div class="col-md-12">
+                           <div class="form-group" >
+                              <label> Url<span class="required_"> *</span></label>
+                              <input type="text" class="form-control" value="<%= chapter.url %>" name="url[]" id="inputName" multiple  required>
+                           </div>
+                        </div>
+
+
+                         <div class="col-md-12" id="unique_0">
+                           <% if( chapter.videos.length){ %>
+
+                              <div class="form-group" >
+                                 <label>Upload Video<span class="required_">*</span></label>
+                                 <input type="file" class="form-control" name="lession_video[]" id="inputName" >
+
+                                 <video controls  width="200px">
+                        
+                                    <source src="<%= chapter.videos[0].lession_video %>" type=video/mp4>
+                                 </video>
+                                 <input type="hidden" value="<%= chapter.videos[0].lession_video %>" name="videos_hidden[]">
+
+
+                              </div>
+
+                           <% } %>
+
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group" >
+                               <label>Lession Thumbnail<span class="required_">*</span></label>
+                               <input type="file" class="form-control" name="lessionThumbnail[]" id="inputName" multiple >
+                               <img src="<%= chapter.lessionThumbnail %>" width="100px">
+                            </div>
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group" >
+                               <label>Start Date & time<span class="required_">*</span></label>
+                               <input type="datetime-local" value="<%= chapter.lesstionStartDate.toISOString().slice(0,16) %>" class="form-control" name="lesstionStartDate[]" id="inputName" required>
+                            </div>
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group" >
+                               <label>End Date & time<span class="required_">*</span></label>
+                               <input type="datetime-local" class="form-control" name="lessionEndDate[]" id="inputName" value="<%= chapter.lessionEndDate.toISOString().slice(0,16) %>"  required>
+                            </div> 
+                           </div>
+                           
+                           <div style="text-align: end;"> <button type="button" onclick="appendData()" class="btn btn-success">Add More +</button></div>
+                          </div>
+                          <br>
+                          </div>
+
+                        </div>
+                        <%  }) %>
+                        <div class="golu"></div>
+                        <br><button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                 </div>
+                  </div>
+                  </div>
+                  </div>
+        
+        
+        
+        
+<!-- /////////// -->
+
+
+   <script>
+    let delete_num = 1;
+    function appendData(){
+      
+        let count = delete_num+1;
+        var html = `<br> <div class="card  box-shadow-0" id="delete_${delete_num}">
+                <div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                   <h4 class="card-title mb-1">Lession </h4>
+                  </div>   
+                  <div class="card-body pt-0" >
+                      <br>
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" >
+                               <label>Chapter Name<span class="required_">*</span></label>
+                               <input type="text" class="form-control" name="chapter_name[]" id="inputName" placeholder="Enter Chapter Name" required>
+                            </div>
+                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group" >
+                               <label>Discription<span class="required_">*</span></label>
+                               <textarea type="text" class="form-control" name="chapterDscription[]" id="inputName" placeholder="Enter Discription Name" required></textarea>
+                            </div>
+                         </div>
+                         <div class="col-md-6">
+                            <div class="form-group" >
+                               <label>Upload Notes (related to Lession)<span class="required_"> *</span></label>
+                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple required>
+                            </div>
+                         </div>
+                         <div class="col-md-6">
+                            <div class="form-group" >
+                               <label>select Mode<span class="required_">*</span></label>
+                               <select class="form-control" onchange="uploadVideo(this.value,'unique_${delete_num}')" name="mode" id="" style="height: 47px;" required>
+                                <option value="">-select mode-</option>
+                                <option value="live">live</option>
+                                <option value="upload">upload</option>
+
+                                </select>
+                            </div>
+                         </div>
+                         <div class="col-md-12" id="unique_${delete_num}"></div>
+                         <div class="col-md-4">
+                            <div class="form-group" >
+                               <label>Lession Thumbnail<span class="required_">*</span></label>
+                               <input type="file" class="form-control" name="lessionThumbnail[]" id="inputName" multiple required>
+                            </div>
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group" >
+                               <label>Start Date & time<span class="required_">*</span></label>
+                               <input type="datetime-local" class="form-control" name="lesstionStartDate[]" id="inputName" required>
+                            </div>
+                         </div>
+                         <div class="col-md-4">
+                            <div class="form-group" >
+                               <label>End Date & time<span class="required_">*</span></label>
+                               <input type="datetime-local" class="form-control" name="lessionEndDate[]" id="inputName" required>
+                            </div>
+                           </div>
+                           
+                            </div>
+                            <div style="text-align: end;"> <button type="button" onclick="appendData()" class="btn btn-success">Add More +</button> <button type="button"  onclick="delete_('delete_${delete_num}')" class="btn btn-danger">Remove -</button></div>
+                          </div>`;
+
+    $('.golu').append(html);
+
+    delete_num++;
+    }
+
+    function delete_(id){
+       $('#'+id).remove();
+    }
+    function uploadVideo(value,id){
+        if(value == 'upload'){
+            $('#'+id).html(`
+                            <div class="form-group" >
+                               <label>Upload Video<span class="required_">*</span></label>
+                               <input type="file" class="form-control" name="lession_video[]" id="inputName" required>
+                            </div>
+                         `);
+        }else{
+            $('#'+id).html(``);
+        }
+    }
+   </script>
+
+<%- include ('../layout/footer.ejs') %>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Live Video Class</title>
+  </head>
+  <body>
+    <video id="localVideo" autoplay></video>
+
+    <button id="startStreamButton" onclick="startStream()">Start Stream</button>
+    <button id="stopStreamButton" onclick="stopStream()">Stop Stream</button>
+
+    <script src="./../../../node_modules/socket.io-client/dist/socket.io.js"></script>
+
+
+  
+    <script>
+      const socket = io();
+
+      function startStream() {
+        const sender = socket.io.engine.id;
+        socket.emit('startStream', sender);
+      }
+
+      function stopStream() {
+        const sender = socket.io.engine.id;
+        socket.emit('stopStream', sender);
+      }
+
+      socket.on('teacherStreamStarted', () => {
+        console.log('Teacher has started the stream');
+        // Handle UI changes when the teacher starts the stream
+      });
+
+      socket.on('teacherStreamStopped', () => {
+        console.log('Teacher has stopped the stream');
+        // Handle UI changes when the teacher stops the stream
+      });
+
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          const videoElement = document.getElementById('localVideo');
+          videoElement.srcObject = stream;
+        })
+        .catch((error) => {
+          console.error('Error accessing media devices:', error);
+        });
+    </script>
+  </body>
+</html>

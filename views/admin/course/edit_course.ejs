@@ -1,0 +1,66 @@
+<%- include ('../layout/header.ejs') %>
+
+<style>
+    html body .label-info {
+    background: #01b2ac !important;
+}
+    </style>
+    <!-- <% if(typeof error != 'undefined'){ %>
+    <div style="text-align: center;"><p><%= error %></p></div>
+    <% } %> -->
+<div class="row justify-content-center" style="margin:20px">
+						<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<div class="card  box-shadow-0">
+								<div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                                  <h4 class="card-title mb-1">Edit Course</h4>
+                                  <a href="/course/show_course" class="btn btn-primary">Back</a>
+								</div>
+                          
+                                <div style="text-align:center;"><p class="popular_job_show"></p></div>
+								<div class="card-body pt-0" >
+									<form  method="post" action="/course/edit_course/<%= course._id %>" enctype="multipart/form-data" >
+                              
+										<br>
+
+                                        <div class="row">
+                                    
+                                            <div class="col-md-6">
+                                            <div class="form-group" >
+                                            <label>Course Name <span class="required_">*</span></label>
+											    <input type="text" value="<%= course.courseName %>" class="form-control" name="courseName" id="inputName" placeholder="Enter Course Name" required>
+										    </div>
+                                            </div>
+
+                                                <div class="col-md-6">
+                                                <div class="form-group" >
+                                                    <label>Course Image <span class="required_">*</span></label>
+                                                    <input type="file" class="form-control" name="courseImage" id="inputName"  >
+                                                    <img src="<%= path %><%= course.courseImage %>" width="100px">
+                                                </div>
+                                                </div>
+                                                
+                                                <div class="col-md-12">
+                                                    <div class="form-group" >
+                                                    <label>Enter Discription <span class="required_"></span></label>
+                                                        <textarea placeholder="Enter Discription"  type="text" class="form-control" name="desc" id="inputName"  required><%= course.desc %></textarea>
+                                                    </div>
+                                                    </div>
+
+                                                 <input type="hidden" name="imageUnlink" value="<%= course.courseImage %>">
+                                            <div class="form-group mb-0 mt-3 justify-content-end">
+                                            <div><br>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    
+                                            </div>
+                                            </div>
+                                    
+									</form>
+
+								</div>
+							</div>
+						</div>
+                    </div>
+
+<%- include ('../layout/footer.ejs') %>
+
+

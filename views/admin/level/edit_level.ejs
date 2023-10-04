@@ -1,0 +1,58 @@
+<%- include ('../layout/header.ejs') %>
+
+<style>
+    html body .label-info {
+    background: #01b2ac !important;
+}
+    </style>
+    <!-- <% if(typeof error != 'undefined'){ %>
+    <div style="text-align: center;"><p><%= error %></p></div>
+    <% } %> -->
+<div class="row justify-content-center" style="margin:20px">
+						<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<div class="card  box-shadow-0">
+								<div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                                  <h4 class="card-title mb-1">Edit Level</h4>
+                                  <a href="/level/show_level" class="btn btn-primary">Back</a>
+								</div>
+                          
+                                <div style="text-align:center;"><p class="popular_job_show"></p></div>
+								<div class="card-body pt-0" >
+									<form  method="post" action="/level/edit_level/<%= level._id %>" enctype="multipart/form-data" >
+                              
+										<br>
+
+                                        <div class="row">
+                                    
+                                            <div class="col-md-6">
+                                            <div class="form-group" >
+                                            <label>Level Name <span class="required_">*</span></label>
+											    <input type="text" value="<%= level.levelName %>" class="form-control" name="levelName" id="inputName"  required>
+										    </div>
+                                            </div>
+
+                                                <div class="col-md-6">
+                                                <div class="form-group" >
+                                                    <label>Level Image <span class="required_">*</span></label>
+                                                    <input type="file" class="form-control" name="levelImage" id="inputName"  >
+                                                    <img src="<%= path %><%= level.levelImage %>" width="100px">
+                                                </div>
+                                                </div>
+                                                 <input type="hidden" name="imageUnlink" value="<%= level.levelImage %>">
+                                            <div class="form-group mb-0 mt-3 justify-content-end">
+                                            <div><br>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    
+                                            </div>
+                                            </div>
+                                    
+									</form>
+
+								</div>
+							</div>
+						</div>
+                    </div>
+
+<%- include ('../layout/footer.ejs') %>
+
+

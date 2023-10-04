@@ -1,0 +1,73 @@
+<%- include ('../layout/header.ejs') %>
+
+<style>
+    html body .label-info {
+    background: #01b2ac !important;
+}
+    </style>
+    <!-- <% if(typeof error != 'undefined'){ %>
+    <div style="text-align: center;"><p><%= error %></p></div>
+    <% } %> -->
+<div class="row justify-content-center" style="margin:20px">
+						<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<div class="card  box-shadow-0">
+								<div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                                  <h4 class="card-title mb-1">Add Coupon</h4>
+                                  <a href="/payment/coupons" class="btn btn-primary">Back</a>
+								</div>
+                          
+                                <div style="text-align:center;"><p class="popular_job_show"></p></div>
+								<div class="card-body pt-0" >
+									<form  method="post" action="/payment/add_coupon"  >
+                              
+										<br>
+
+                                        <div class="row">
+                                    
+                                          
+
+                                            <div class="col-md-4">
+                                                <div class="form-group" >
+                                                <label>Select Type <span class="required_">*</span></label>
+                                                    <select type="text" class="form-control" name="type" id="inputName"  required style="height: 47px;" required>
+                                                        <option value="">-select course-</option>
+                                                        <option value="Percent">-Percent-</option>
+                                                        <option value="Amount">-Amount-</option>
+                                                    
+                                                    </select>
+                                                </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group" >
+                                                    <label>Add Amount/Percent <span class="required_"></span></label>
+                                                        <input type="number" class="form-control" name="disount" id="inputName" placeholder="add discount  "  required>
+                                                    </div>
+                                                    </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group" >
+                                                <label>add Coupon <span class="required_"></span></label>
+                                                    <input type="text" class="form-control" name="coupon" id="inputName" placeholder="add coupon" required>
+                                                </div>
+                                                </div>
+
+                                              
+
+                                            <div class="form-group mb-0 mt-3 justify-content-end">
+                                            <div><br>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    
+                                            </div>
+                                            </div>
+                                    
+									</form>
+
+								</div>
+							</div>
+						</div>
+                    </div>
+
+<%- include ('../layout/footer.ejs') %>
+
+

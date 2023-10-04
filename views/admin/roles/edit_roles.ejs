@@ -1,0 +1,491 @@
+<%- include ('../layout/header.ejs'); %>
+
+
+<div class="row justify-content-center" style="margin:20px">
+   <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+      <div class="card  box-shadow-0">
+         <div class="card-header d-flex justify-content-between" style="padding-top:15px">
+            <h4 class="card-title mb-1">Edit Roles</h4>
+            <a href="/dashboard/show_roles" class="btn btn-primary">Back</a>
+         </div>
+         <div style="text-align:center;">
+            <p class="popular_job_show"></p>
+         </div>
+         <div class="card-body pt-0" >
+            <form  method="post"  action="/dashboard/edited_roles/<%= roleData._id %>" enctype="multipart/form-data" >
+               <br>
+               <div class="form-group" >
+                  <label>Role Name <span class="required_">*</span></label>
+                  <input type="text" class="form-control" value="<%= roleData.roles %>" name="role_name" id="inputName" placeholder="role name" required>
+               </div>
+            
+               <hr>
+               <p>&nbsp&nbsp&nbspPermissions:</p>
+               <br><br> 
+               <div class="row">
+                  <div class="col-md-3">
+                     <h4>Roles</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox"  onclick="selectRoles('all_roles','roles')" id="all_roles">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+         
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input name="viewRole" <% if(inArray(roleData.permission,'viewRole')){ %> checked
+                       <% } %>  type="checkbox" class="roles" id="viewroleid">
+                        <label for="css">View Roles</label>
+                     </div>
+                     <div class="form-group">
+                        <input name="addRole"  <% if(inArray(roleData.permission,'addRole')){ %> checked
+                            <% } %> type="checkbox" class="roles"  onclick="firstvalueshow('viewroleid',this.checked)">
+                        <label for="css">Add Roles</label>
+                     </div>
+                     <div class="form-group">
+                        <input name="editRole" <% if(inArray(roleData.permission,'editRole')){ %> checked
+                            <% } %> type="checkbox" class="roles"  onclick="firstvalueshow('viewroleid',this.checked)">
+                        <label for="css">Edit Roles</label>
+                     </div>
+                     <div class="form-group">
+                        <input name="deleteRole" <% if(inArray(roleData.permission,'deleteRole')){ %> checked
+                            <% } %> type="checkbox" class="roles"  onclick="firstvalueshow('viewroleid',this.checked)">
+                        <label for="css">Delete Roles</label>
+                     </div>
+                     <hr>
+                  </div>
+                  <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                  <div class="col-md-3">
+                     <h4>Users</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_users','users')" id="all_users">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewUser')){ %> checked
+                           <% } %> type="checkbox"  name="viewUser" class="users" id="viewuserid">
+                        <label for="css">View Users</label>
+                     </div>
+                     <div class="form-group">
+                        <input  type="checkbox" 
+                         <% if(inArray(roleData.permission,'addUser')){ %> checked
+                           <% } %> name="addUser" class="users" onclick="firstvalueshow('viewuserid',this.checked)">
+                        <label for="css">Add User</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'editUser')){ %> checked
+                           <% } %> type="checkbox" name="editUser" class="users" onclick="firstvalueshow('viewuserid',this.checked)">
+                        <label for="css">Edit User</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'statusUser')){ %> checked
+                           <% } %> type="checkbox" name="statusUser"  class="users" onclick="firstvalueshow('viewuserid',this.checked)">
+                        <label for="css">Status User</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'deleteUser')){ %> checked
+                           <% } %>   type="checkbox"  name="deleteUser" class="users" onclick="firstvalueshow('viewuserid',this.checked)">
+                        <label for="css">Delete Users</label>
+                     </div>
+                  <hr>
+                  </div>
+
+                  <!-- ///////////////////// -->
+
+
+
+
+                   <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                   <div class="col-md-3">
+                     <h4>Task</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_task','task')" id="all_task">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewTask')){ %> checked
+                           <% } %> type="checkbox"  name="viewTask" class="task" id="viewtaskid">
+                        <label for="css">View Task</label>
+                     </div>
+                     <div class="form-group">
+                        <input  type="checkbox" 
+                         <% if(inArray(roleData.permission,'addTask')){ %> checked
+                           <% } %> name="addTask" class="task" onclick="firstvalueshow('viewtaskid',this.checked)">
+                        <label for="css">Assign Task</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'editTask')){ %> checked
+                           <% } %> type="checkbox" name="editTask" class="task" onclick="firstvalueshow('viewtaskid',this.checked)">
+                        <label for="css">Edit Task</label>
+                     </div>
+                    
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'deleteTask')){ %> checked
+                           <% } %>   type="checkbox"  name="deleteTask" class="task" onclick="firstvalueshow('viewtaskid',this.checked)">
+                        <label for="css">Delete Task</label>
+                     </div>
+                  <hr>
+                  </div>
+
+                  <!-- ///////////////////// -->
+
+
+                   <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                   <div class="col-md-3">
+                     <h4>ToDo</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_todo','todo')" id="all_todo">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewTodo')){ %> checked
+                           <% } %> type="checkbox"  name="viewTodo" class="todo" id="viewtodoid">
+                        <label for="css">View Task</label>
+                     </div>
+                     
+
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'addTodo')){ %> checked
+                           <% } %> type="checkbox"  name="addTodo" class="todo" onclick="firstvalueshow('viewtodoid',this.checked)">
+                        <label for="css">Add Task</label>
+                     </div>
+
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'deleteTodo')){ %> checked
+                           <% } %> type="checkbox"  name="deleteTodo" class="todo" onclick="firstvalueshow('viewtodoid',this.checked)">
+                        <label for="css">Delete Task</label>
+                     </div>
+                     
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'filterTodo')){ %> checked
+                           <% } %> type="checkbox"  name="filterTodo" class="todo" onclick="firstvalueshow('viewtodoid',this.checked)">
+                        <label for="css">filter Task</label>
+                     </div>
+                  <hr>
+                  </div>
+
+                  <!-- ///////////////////// -->
+
+
+                   <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                   <div class="col-md-3">
+                     <h4>Attendance</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_atten','atten')" id="all_atten">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewAtten')){ %> checked
+                           <% } %> type="checkbox"  name="viewAtten" class="atten" id="viewattenid">
+                        <label for="css">View Attendance</label>
+                     </div>
+                    
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'addAtten')){ %> checked
+                           <% } %> type="checkbox"  name="addAtten" class="atten" onclick="firstvalueshow('viewattenid',this.checked)">
+                        <label for="css">Add Attendance</label>
+                     </div>
+
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'deleteAtten')){ %> checked
+                           <% } %> type="checkbox"  name="deleteAtten" class="atten" onclick="firstvalueshow('viewattenid',this.checked)">
+                        <label for="css">Delete Attendance</label>
+                     </div>
+                  
+                  <hr>
+                  </div>
+
+                  <!-- ///////////////////// -->
+
+
+
+                  <div class="col-md-3">
+                     <h4>Course</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_course','course')" id="all_course">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewCourse')){ %> checked
+                           <% } %> type="checkbox" name="viewCourse" class="course" id="viewcourseid">
+                        <label for="css">View Course</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'addCourse')){ %> checked
+                           <% } %>  type="checkbox"  name="addCourse" class="course" onclick="firstvalueshow('viewcourseid',this.checked)">
+                        <label for="css">Add Course</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'editCourse')){ %> checked
+                           <% } %> type="checkbox" name="editCourse"  class="course" onclick="firstvalueshow('viewcourseid',this.checked)">
+                        <label for="css">Edit Course</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'statusCourse')){ %> checked
+                           <% } %> type="checkbox" name="statusCourse"  class="course" onclick="firstvalueshow('viewcourseid',this.checked)">
+                        <label for="css">Status Course</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'deleteCourse')){ %> checked
+                           <% } %> type="checkbox"  name="deleteCourse" class="course" onclick="firstvalueshow('viewcourseid',this.checked)">
+                        <label for="css">Delete Course</label>
+                     </div>
+                     <hr>
+                  </div>
+
+
+                  <!-- /////////////////////////// -->
+
+                  <div class="col-md-3">
+                     <h4>Level</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_level','level')" id="all_level">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewLevel')){ %> checked
+                           <% } %> type="checkbox" name="viewLevel" class="level" id="viewlevelid">
+                        <label for="css">View Level</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'addLevel')){ %> checked
+                           <% } %> type="checkbox"  name="addLevel" class="level" onclick="firstvalueshow('viewlevelid',this.checked)">
+                        <label for="css">Add Level</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'editLevel')){ %> checked
+                           <% } %> type="checkbox" name="editLevel"  class="level" onclick="firstvalueshow('viewlevelid',this.checked)">
+                        <label for="css">Edit Level</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'statusLevel')){ %> checked
+                           <% } %> type="checkbox" name="statusLevel"  class="level" onclick="firstvalueshow('viewlevelid',this.checked)">
+                        <label for="css">Status Level</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'deleteLevel')){ %> checked
+                           <% } %> type="checkbox"  name="deleteLevel" class="level" onclick="firstvalueshow('viewlevelid',this.checked)">
+                        <label for="css">Delete Level</label>
+                     </div>
+                     <hr>
+                  </div>
+
+                  <!-- ///////////////////////////////////// -->
+
+
+                  <div class="col-md-3">
+                     <h4>Chapter</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_chapter','chapter')" id="all_chapter">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewChapter')){ %> checked
+                           <% } %>  type="checkbox" name="viewChapter" class="chapter" id="viewchapterid">
+                        <label for="css">View Chapter</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'addChapter')){ %> checked
+                           <% } %>   type="checkbox"  name="addChapter" class="chapter" onclick="firstvalueshow('viewchapterid',this.checked)">
+                        <label for="css">Add Chapter</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'editChapter')){ %> checked
+                           <% } %>  type="checkbox" name="editChapter"  class="chapter" onclick="firstvalueshow('viewchapterid',this.checked)">
+                        <label for="css">Edit Chapter</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'statusChapter')){ %> checked
+                           <% } %>  type="checkbox" name="statusChapter"  class="chapter" onclick="firstvalueshow('viewchapterid',this.checked)">
+                        <label for="css">Status Chapter</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'deleteChapter')){ %> checked
+                           <% } %>   type="checkbox"  name="deleteChapter" class="chapter" onclick="firstvalueshow('viewchapterid',this.checked)">
+                        <label for="css">Delete Chapter</label>
+                     </div>
+                     <hr>
+                  </div>
+
+
+
+                  <!-- /////////////////////////////////// -->
+
+                  <div class="col-md-3">
+                     <h4>Teacher</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_teacher','teacher')" id="all_teacher">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'viewTeacher')){ %> checked
+                           <% } %> type="checkbox" name="viewTeacher" class="teacher" id="viewteacherid">
+                        <label for="css">View Teacher</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'addTeacher')){ %> checked
+                           <% } %> type="checkbox"  name="addTeacher" class="teacher" onclick="firstvalueshow('viewteacherid',this.checked)">
+                        <label for="css">Add Teacher</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'editTeacher')){ %> checked
+                           <% } %> type="checkbox" name="editTeacher"  class="teacher" onclick="firstvalueshow('viewteacherid',this.checked)">
+                        <label for="css">Edit Teacher</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'statusTeacher')){ %> checked
+                           <% } %>  type="checkbox" name="statusTeacher"  class="teacher" onclick="firstvalueshow('viewteacherid',this.checked)">
+                        <label for="css">Status Teacher</label>
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'deleteTeacher')){ %> checked
+                           <% } %> type="checkbox"  name="deleteTeacher" class="teacher" onclick="firstvalueshow('viewteacherid',this.checked)">
+                        <label for="css">Delete Teacher</label>
+                     </div>
+                     <hr>
+                  </div>
+                  <!-- //////////////////////////////////////// -->
+
+
+                  
+                  <div class="col-md-3">
+                     <h4>Student</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_student','student')" id="all_student">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'viewStudent')){ %> checked
+                           <% } %>  type="checkbox" name="viewStudent" class="student" id="viewstudentid">
+                        <label for="css">View Student</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'addStudent')){ %> checked
+                           <% } %>  type="checkbox"  name="addStudent" class="student" onclick="firstvalueshow('viewstudentid',this.checked)">
+                        <label for="css">Add Student</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'editStudent')){ %> checked
+                           <% } %>  type="checkbox" name="editStudent"  class="student" onclick="firstvalueshow('viewstudentid',this.checked)">
+                        <label for="css">Edit Student</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'statusStudent')){ %> checked
+                           <% } %>  type="checkbox" name="statusStudent"  class="student" onclick="firstvalueshow('viewstudentid',this.checked)">
+                        <label for="css">Status Student</label>
+                     </div>
+                     <div class="form-group">
+                        <input  <% if(inArray(roleData.permission,'deleteStudent')){ %> checked
+                           <% } %>  type="checkbox"  name="deleteStudent" class="student" onclick="firstvalueshow('viewteacherid',this.checked)">
+                        <label for="css">Delete Student</label>
+                     </div>
+                     <hr>
+                  </div>
+
+                  <!-- /////////////////////////////////////// -->
+
+                  <div class="col-md-3">
+                     <h4>Contact Inquery</h4>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <input  type="checkbox" onclick="selectRoles('all_contact','contact')" id="all_contact">
+                        <label for="csds">Select all</label>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'viewContact')){ %> checked
+                           <% } %>  type="checkbox" name="viewContact" class="contact" id="viewcontcatid">
+                        <label for="css">View Contact</label>
+                     </div>
+                     
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'mailContact')){ %> checked
+                           <% } %>  type="checkbox" name="mailContact"  class="contact" onclick="firstvalueshow('viewcontcatid',this.checked)">
+                        <label for="css">Send Mail Contact</label> 
+                     </div>
+                     <div class="form-group">
+                        <input <% if(inArray(roleData.permission,'deleteContact')){ %> checked
+                           <% } %>  type="checkbox"  name="deleteContact" class="contact" onclick="firstvalueshow('viewcontcatid',this.checked)">
+                        <label for="css">Delete Contact</label>
+                     </div>
+                     <hr>
+                  </div>
+
+                  <!-- /////////////////////////////////////////////// -->
+               </div>
+               <div class="form-group mb-0 mt-3 justify-content-end">
+                  <div>
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+   function selectRoles(id,clss){
+          var checked = $('#'+id).prop('checked')
+           if(checked){
+                  $('.'+clss).prop('checked',true);
+           }else{
+                  $('.'+clss).prop('checked',false);
+           }
+     }
+
+
+     function firstvalueshow(id,value){
+      var checked = $('#'+id).prop('checked')
+      
+      if(value){
+         if(!checked){
+         $('#'+id).prop('checked',true);
+         }
+      }else{
+         $('#'+id).prop('checked',false);
+      }
+     }
+</script>
+
+<%- include ('../layout/footer.ejs') %>

@@ -1,0 +1,98 @@
+
+<%- include ('../layout/header.ejs') %>
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h4 class="card-title"></h4>
+                  <% if(inArray(locals.usersession.roles_id.permission,'addUser')){ %>
+                  <a href="/users/add_users" style="padding:10px; border-radius:5px" class="btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Users</a>
+                  <% } %>
+               </div>
+                  <p class="card-description">
+                    <!-- Add class <code>.table-bordered</code> -->
+                  </p>
+                  <div class="table-responsive pt-3">
+                    <table class="table table-bordered myTable">
+                         <thead>
+                        <tr>
+                          <th>
+                            Id
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                          <th>
+                            Role
+                          </th>
+                          <th>
+                            Action
+                          </th>
+
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <%  
+                        i=1; 
+                        allUsers.forEach(function(user){ 
+                        %>
+                      
+                        <tr>
+                          <td>
+                           <%= i %>
+                          </td>
+                          <td>
+                            <%= user.name %>
+                          </td>
+                          <td>
+                            <%= user.email %>
+                          </td>
+                          <td>
+                            <%= user.data[0].roles %>
+                          </td>
+                        
+                          <td>
+                           
+                        <% if(inArray(locals.usersession.roles_id.permission,'deleteUser')){ %>
+                         <a href="/users/delete_user/<%= user._id %>" data-toggle="tooltip" data-placement="top" title="delete Button" onclick = "if (! confirm('are you sure you want to delete this user?')) { return false; }" class="btn btn-primary btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                         <% } %>
+                        
+                         <% if(inArray(locals.usersession.roles_id.permission,'statusUser')){ %>
+                         <% if(user.status == 1){ %>
+
+                          <a href="/users/status_user/<%= user._id %>/2"  data-toggle="tooltip" data-placement="top" title="Active playlist" class="btn btn-success btn-sm"><i class="fa fa-user" aria-hidden="true"></i></a>
+
+                          <% }else{ %>
+
+                            <a href="/users/status_user/<%= user._id %>/1" data-toggle="tooltip" data-placement="top" title="disable playlist" class="btn btn-warning btn-sm"><i class="fa fa-ban" aria-hidden="true"></i></a>
+
+                          <% } %>
+                          <% } %>
+                        
+                          <% if(inArray(locals.usersession.roles_id.permission,'editUser')){ %>
+                          <a href="/users/edit_user/<%= user._id %>" data-toggle="tooltip" data-placement="top" title="edit button" style="background-color:blue" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                          <% } %>
+                          </td>
+                        
+                        </tr>
+                       
+                       <%
+                       i++;
+                       });
+                       %>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%- include ('../layout/footer.ejs') %>
