@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 
-const CLIENT_ID = 'y_406UKfROiEzqDXKcfT2A';
-const CLIENT_SECRET = 'TjZUOBLkI9387sf4Ftwlb2SaK9DU8kti';
+const CLIENT_ID = '2QzXoasoQBimWPtbXIsg';
+const CLIENT_SECRET = '7JP72COlmOyFbFjSOETepQr3eyADgp4G';
 const crypto = require('crypto');
 
 
