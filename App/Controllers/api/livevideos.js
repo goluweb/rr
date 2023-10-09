@@ -12,7 +12,7 @@ const crypto = require('crypto');
 
 const querystring = require('querystring');  
 app.get('/authorize', (req, res) => {
-  const redirectUri = encodeURIComponent('http://localhost:3000/api/live/callback');
+  const redirectUri = encodeURIComponent('https://node-project-rc3o.onrender.com/api/live/callback');
   const state = crypto.randomBytes(16).toString('hex');
   const authorizeUrl = `https://zoom.us/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&state=${state}`;
   res.redirect(authorizeUrl);
@@ -24,7 +24,7 @@ app.get('/callback', async (req, res) => {
   const tokenParams = {
     grant_type: 'authorization_code',
     code,
-    redirect_uri: 'http://localhost:3000/callback', // Must match the redirect URI you used in the authorize request
+    redirect_uri: 'https://node-project-rc3o.onrender.com/api/live/callback', // Must match the redirect URI you used in the authorize request
   };
 
   const headers = {
