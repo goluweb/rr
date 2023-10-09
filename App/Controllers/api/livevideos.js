@@ -4,60 +4,44 @@ const axios = require('axios');
 
 const CLIENT_ID = 'y_406UKfROiEzqDXKcfT2A';
 const CLIENT_SECRET = 'TjZUOBLkI9387sf4Ftwlb2SaK9DU8kti';
+const crypto = require('crypto');
 
-// Function to generate a new access token
-const generateAccessToken = async () => {
-  try {
-    const response = await axios.post(
-      'https://zoom.us/oauth/token',
-      null,
-      {
-        params: {
-          grant_type: 'client_credentials',
-          client_id: CLIENT_ID,
-          client_secret: CLIENT_SECRET,
-        },
-      }
-    );
-    return response.data.access_token;
-  } catch (error) {
-    console.error('Error generating access token:', error.response.data);
-    throw error;
-  }
-};
 
-let BEARER_TOKEN = null;
+// Function 
 
-const ensureValidToken = async () => {
-  if (!BEARER_TOKEN) {
-    BEARER_TOKEN = await generateAccessToken();
-  }
-};
 
-app.post('/golive', async (req, res) => {
-  try {
-    await ensureValidToken();
-
-    const meetingParams = {
-      host_id: 'me',
-      topic: 'Arvind Pahadi',
-      type: 2,
-      start_time: '2023-08-05T12:00:00Z',
-      timezone: 'IST',
-    };
-
-    const response = await axios.post('https://api.zoom.us/v2/users/me/meetings', meetingParams, {
-      headers: {
-        'Authorization': `Bearer ${BEARER_TOKEN}`,
-      },
-    });
-
-    console.log('Meeting created:', response.data);
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error creating meeting:', error.response.data);
-    res.status(error.response.status).json(error.response.data);
-  }
+const querystring = require('querystring');  
+app.get('/authorize', (req, res) => {
+  const redirectUri = encodeURIComponent('http://localhost:3000/api/live/callback');
+  const state = crypto.randomBytes(16).toString('hex');
+  const authorizeUrl = `https://zoom.us/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&state=${state}`;
+  res.redirect(authorizeUrl);
 });
 
+app.get('/callback', async (req, res) => {
+  const code = req.query.code;
+  // Exchange the code for an access token
+  const tokenParams = {
+    grant_type: 'authorization_code',
+    code,
+    redirect_uri: 'http://localhost:3000/callback', // Must match the redirect URI you used in the authorize request
+  };
+
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+  const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
+  const base64Auth = Buffer.from(authString).toString('base64');
+  headers.Authorization = `Basic ${base64Auth}`;
+  try {
+    const response = await axios.post('https://zoom.us/oauth/token', querystring.stringify(tokenParams), { headers });
+    const accessToken = response.data.access_token;
+    console.log('Access Token:', accessToken);
+    res.send('Access Token: ' + accessToken);
+     } 
+    catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).send('Error');
+  }
+});
 module.exports=app;
