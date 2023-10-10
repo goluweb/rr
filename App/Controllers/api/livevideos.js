@@ -44,4 +44,39 @@ app.get('/callback', async (req, res) => {
     res.status(500).send('Error');
   }
 });
+
+
+
+
+
+
+
+
+app.post('/golive', async (req, res) => {
+  try {
+    await ensureValidToken();
+
+    const meetingParams = {
+      host_id: 'me',
+      topic: 'Arvind Pahadi',
+      type: 2, 
+      start_time: '2023-08-05T12:00:00Z',
+      timezone: 'IST',
+    };
+    let BEARER_TOKEN ='eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjdmMWE1ZGRhLTc3N2YtNGExMC1iMzYyLTJlMDE2NDk2NGVkOCJ9.eyJ2ZXIiOjksImF1aWQiOiJhZGNhOThiNzM4OGVjYzg4OThmNmViZmU2MGI3ODZmNyIsImNvZGUiOiJ4bmIyRGNaeDU3MXJBb1BKY3JqUUxpd3R2dnNGYWZ4TEEiLCJpc3MiOiJ6bTpjaWQ6MlF6WG9hc29RQmltV1B0YlhJc2ciLCJnbm8iOjAsInR5cGUiOjAsInRpZCI6MCwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiUS03VkxIaWVSLVdNdThTU292M2NqQSIsIm5iZiI6MTY5NjkyMzU0OCwiZXhwIjoxNjk2OTI3MTQ4LCJpYXQiOjE2OTY5MjM1NDgsImFpZCI6ImZCTFVGS3JHUldXZVg1LTA3TWRQb2cifQ.v3mGPoQLJwUE-U8snAaam_dgODeyUyE9lR6nBkAQj7aGvqIt-i31Bnljkb-cRwddJPJKdws3EoDO_kSi-rQCDA';
+
+    const response = await axios.post('https://api.zoom.us/v2/users/me/meetings', meetingParams, {
+      headers: {
+        'Authorization': `Bearer ${BEARER_TOKEN}`,
+      },
+    });
+
+    console.log('Meeting created:', response.data);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error creating meeting:', error.response.data);
+    res.status(error.response.status).json(error.response.data);
+  }
+});
+
 module.exports=app;
