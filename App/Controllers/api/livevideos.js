@@ -37,6 +37,7 @@ app.get('/callback', async (req, res) => {
     const response = await axios.post('https://zoom.us/oauth/token', querystring.stringify(tokenParams), { headers });
     const accessToken = response.data.access_token;
     console.log('Access Token:', accessToken);
+    console.log('tt:', response.data);
     res.send('Access Token: ' + accessToken);
      } 
     catch (error) {
