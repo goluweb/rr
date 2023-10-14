@@ -61,7 +61,7 @@ app.post('/addchapter',rolePermission('addChapter'),imageUpload.any(), async (re
          playlist_id:play._id,
          chapter_name:chapter_name[i],
          chapterDscription:chapterDscription[i],
-         notes:note[i].path ? note[i].path :'',
+         notes:'',
          mode:mode[i],
          url:url[i],
          lessionThumbnail:thumb[i].path,
