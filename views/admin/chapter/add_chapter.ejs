@@ -112,8 +112,8 @@
                          </div>
                          <div class="col-md-6">
                             <div class="form-group" >
-                               <label>Upload Notes (related to Lession)<span class="required_"> *</span></label>
-                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple  required>
+                               <label>Upload Notes (related to Lession)<span class="required_"> </span></label>
+                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple  >
                             </div>
                          </div>
                          <div class="col-md-6">
@@ -201,22 +201,29 @@
                          </div>
                          <div class="col-md-6">
                             <div class="form-group" >
-                               <label>Upload Notes (related to Lession)<span class="required_"> *</span></label>
-                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple required>
+                               <label>Upload Notes (related to Lession)<span class="required_"> </span></label>
+                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple  >
                             </div>
                          </div>
                          <div class="col-md-6">
                             <div class="form-group" >
                                <label>select Mode<span class="required_">*</span></label>
-                               <select class="form-control" onchange="uploadVideo(this.value,'unique_${delete_num}')" name="mode" id="" style="height: 47px;" required>
-                                <option value="">-select mode-</option>
+                               <select class="form-control" onchange="uploadVideo(this.value,'unique_0')" name="mode[]" id="" style="height: 47px;" required>
+                                <option value="">-select mode-</option> 
                                 <option value="live">live</option>
                                 <option value="upload">upload</option>
-
                                 </select>
                             </div>
                          </div>
-                         <div class="col-md-12" id="unique_${delete_num}"></div>
+
+                         <div class="col-md-12">
+                           <div class="form-group" >
+                              <label> Url<span class="required_"> *</span></label>
+                              <input type="text" class="form-control" name="url[]" id="inputName" multiple  required>
+                           </div>
+                        </div>
+
+                         <div class="col-md-12" id="unique_0"></div>
                          <div class="col-md-4">
                             <div class="form-group" >
                                <label>Lession Thumbnail<span class="required_">*</span></label>
@@ -235,8 +242,6 @@
                                <input type="datetime-local" class="form-control" name="lessionEndDate[]" id="inputName" required>
                             </div>
                            </div>
-                           
-                            </div>
                             <div style="text-align: end;"> <button type="button" onclick="appendData()" class="btn btn-success">Add More +</button> <button type="button"  onclick="delete_('delete_${delete_num}')" class="btn btn-danger">Remove -</button></div>
                           </div>`;
 

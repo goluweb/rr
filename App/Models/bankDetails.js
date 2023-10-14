@@ -30,6 +30,7 @@ const bankDetails = database.Schema({
     }
 });
 
-const bankAllDetaile = database.model('bankDetails',bankDetails);
 
+const bankAllDetaile = database.model('bankDetails',bankDetails);
+console.log('uploads..');
 module.exports = bankAllDetaile;

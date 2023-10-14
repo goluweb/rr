@@ -64,7 +64,7 @@ app.post('/golive', async (req, res) => {
       start_time: '2023-08-05T12:00:00Z',
       timezone: 'IST',
     };
-    let BEARER_TOKEN ='eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjdmMWE1ZGRhLTc3N2YtNGExMC1iMzYyLTJlMDE2NDk2NGVkOCJ9.eyJ2ZXIiOjksImF1aWQiOiJhZGNhOThiNzM4OGVjYzg4OThmNmViZmU2MGI3ODZmNyIsImNvZGUiOiJ4bmIyRGNaeDU3MXJBb1BKY3JqUUxpd3R2dnNGYWZ4TEEiLCJpc3MiOiJ6bTpjaWQ6MlF6WG9hc29RQmltV1B0YlhJc2ciLCJnbm8iOjAsInR5cGUiOjAsInRpZCI6MCwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiUS03VkxIaWVSLVdNdThTU292M2NqQSIsIm5iZiI6MTY5NjkyMzU0OCwiZXhwIjoxNjk2OTI3MTQ4LCJpYXQiOjE2OTY5MjM1NDgsImFpZCI6ImZCTFVGS3JHUldXZVg1LTA3TWRQb2cifQ.v3mGPoQLJwUE-U8snAaam_dgODeyUyE9lR6nBkAQj7aGvqIt-i31Bnljkb-cRwddJPJKdws3EoDO_kSi-rQCDA';
+    let BEARER_TOKEN ='eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjJlMjdkY2M1LTE0NmYtNDc5Ni1iYzcyLWM0MjEwYTMwMzZjZCJ9.eyJ2ZXIiOjksImF1aWQiOiJhZGNhOThiNzM4OGVjYzg4OThmNmViZmU2MGI3ODZmNyIsImNvZGUiOiJZYTJNOUVGMldCNHZoUjhFRDk3UXJPazNuN1k0a3lTTlEiLCJpc3MiOiJ6bTpjaWQ6MlF6WG9hc29RQmltV1B0YlhJc2ciLCJnbm8iOjAsInR5cGUiOjEsInRpZCI6MCwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiUS03VkxIaWVSLVdNdThTU292M2NqQSIsIm5iZiI6MTY5NjkyNDYxNSwiZXhwIjoxNzA0NzAwNjE1LCJpYXQiOjE2OTY5MjQ2MTUsImFpZCI6ImZCTFVGS3JHUldXZVg1LTA3TWRQb2cifQ.vRTH3pgEK5TsJqVWVt1QraKHNJeFK-ciw91_zDXojsxpZnP6fw-HYUS_XSejTXuT782792LqNppXssaulL4b1g';
 
     const response = await axios.post('https://api.zoom.us/v2/users/me/meetings', meetingParams, {
       headers: {
@@ -79,5 +79,22 @@ app.post('/golive', async (req, res) => {
     res.status(error.response.status).json(error.response.data);
   }
 });
+
+
+
+
+// Define a route to generate the Zoom signature
+app.get('/generate-signature', (req, res) => {
+
+  const apiKey = 'Pm0aZWzoS0C6YKxtlUFEJw';
+  const apiSecret = 'HhJR497swnjN84mn3RowBT8vprBf8mUw';
+
+  const timestamp = new Date().getTime() - 30000; // 30 seconds in the past
+  const message = Buffer.from(apiKey + req.query.meetingNumber + timestamp + req.query.role).toString('base64');
+  const signature = crypto.createHmac('sha256', apiSecret).update(message).digest('base64');
+
+  res.json({ signature });
+});
+
 
 module.exports=app;

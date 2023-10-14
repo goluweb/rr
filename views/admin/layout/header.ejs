@@ -73,7 +73,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
 <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
-<!----Upper links end---------------------->
+<!-- -- Upper links end -- -->
 
 </head>
 
@@ -138,18 +138,15 @@
             <li class="nav-item nav-profile dropdown">
               <% if(inArray(locals.usersession.roles_id.permission,'addAtten')){ %>
               <% if(typeof locals.attendance !== 'undefined' && locals.attendance !== null){ %>
-             
              <% if(locals.attendance == 'login_attendance'){ %>          
                 <a href="/attendance/update" class="nav-link dropdown-toggle icon-container" title="attendance SignOut" style="cursor:pointer;padding-right: 35px;
                 padding-bottom: 37px;"  role="button" >
                 <i class="fa fa-hourglass-start icon" aria-hidden="true"></i>
               </a>
             <% }else if(locals.attendance == 'logout_attendance'){ %>
-           
                 <a class="nav-link dropdown-toggle" onclick="alert('your today attendance is already submitted')"  title="attendance SignIn" style="cursor:pointer"  role="button" href="javascript:void()" >
                   <i class="fa fa-hourglass-start" aria-hidden="true"></i>
                 </a>
-  
                <% } else if(locals.attendance == 'absents'){ %>
 
                   <a class="nav-link dropdown-toggle" onclick="add_attendance()"  title="attendance SignIn" style="cursor:pointer"  role="button" >
@@ -164,9 +161,6 @@
                 <i class="fa fa-plus-square-o" aria-hidden="true"></i>
               </a>
               <% } %>
-
-
-
               <div  class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
                 <div class="dropdown-header">
                   <h6 class="text-uppercase mb-0">Notifications</h6>
@@ -302,44 +296,30 @@
                     <div class="col-md-6 padding-assign">
                       <label>Add Status.<span class="required_">*</span></label>
                           <select type="text" class="form-control " name="task_status" id="inputName" style="height: 45px;">
-                             
-                              
-                              <option value="">-select status-</option>
-                            
+                              <option value="">-select status-</option>                            
                               <option value="fresh">Fresh Task</option>
                               <option value="process">On Process</option>
                               <option value="hold">On Hold</option>
-                              <option value="Complete">Complete</option>
-                             
-                              
+                              <option value="Complete">Complete</option>                        
                           </select>
-                      </div>
-      
-                      
-                  <div class="col-md-6 padding-assign">
-                    <label>Select Task Priority.<span class="required_">*</span></label>
+                      </div> 
+                      <div class="col-md-6 padding-assign">
+                       <label>Select Task Priority.<span class="required_">*</span></label>
                         <select type="text" style="height: 47px;" class="form-control " name="priority" id="inputName"  >
-                           
-                            
                             <option value="low">low</option>
                             <option value="medium">medium</option>
                             <option value="urgent">urgent</option>
-                            
                         </select>
                     </div>
-                    <div class="col-md-6 padding-assign">
-                      <label>Attachments.<span class="required_"></span></label>
-                      <input type="file" class="form-control " name="attachment" id="inputName">
-                </div>
-        
-      
-                    <div class="col-md-12 padding-assign">
-                      
-                        <textarea type="date" class="form-control " name="discription" id="inputName" placeholder="Enter Discription" required></textarea>
+                      <div class="col-md-6 padding-assign">
+                        <label>Attachments.<span class="required_"></span></label>
+                        <input type="file" class="form-control " name="attachment" id="inputName">
                       </div>
-             
-                  </div>
-                </div>
+                          <div class="col-md-12 padding-assign">   
+                              <textarea type="date" class="form-control " name="discription" id="inputName" placeholder="Enter Discription" required></textarea>
+                            </div>
+                        </div>
+                      </div>
             
             <div class="modal-footer">
               

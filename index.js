@@ -65,6 +65,7 @@ const teacher = require(__dirname+'/App/Controllers/api/teacher')
 const mcq_api = require(__dirname+'/App/Controllers/api/mcq')
 const payment_page = require(__dirname+'/App/Controllers/api/payment_page')
 const LiveVideos = require(__dirname+'/App/Controllers/api/livevideos')
+const techerLogin = require(__dirname+'/App/Controllers/api/teacherLogin')
 
 app.use('/inquery',inqueryController);
 app.use('/api/register',Register);
@@ -74,6 +75,7 @@ app.use('/api/teacher',teacher)
 app.use('/api/mcq',mcq_api)
 app.use('/api/payment_page',payment_page)
 app.use('/api/live',LiveVideos)
+app.use('/api/teacher_auth_login',techerLogin)
 // Api
     
 app.get('/',(req,res)=>{

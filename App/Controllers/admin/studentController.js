@@ -6,8 +6,8 @@ const imageUpload = require(__dirname+'/../../middleware/uploadImage');
 const rolePermission = require(__dirname+'/../../middleware/PermissionCheck'); //middleware for session check
 const inArray = require('in-array'); 
 
-// {_id:req.session.user._id}
 
+// {_id:req.session.user._id}
 app.get('/add_student',rolePermission('addStudent'), async(req,res) =>{
     let playlist;
     if(req.session.user.roles_id.roles === 'admin'){
@@ -55,8 +55,6 @@ const {name,mobile,email,password,assign_course,address} = req.body;
 
 })
 
-
-
 app.get('/status_student/:id/:num',rolePermission('statusStudent'), async(req,res)=>{
     const {id,num} = req.params;
     const data = await studentModel.updateOne({_id:id},{status:num})
@@ -83,7 +81,6 @@ app.get('/edit_student/:id',rolePermission('editStudent'),async(req,res)=>{
   console.log(data)
   res.render('admin/student/edit_student',{student:data,playlist:playlist,inArray:inArray})
 })
-
 
 
 app.post('/edit_student/:id',rolePermission('editStudent'),imageUpload.single('image'),async (req,res)=>{

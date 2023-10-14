@@ -77,6 +77,13 @@ playList1.virtual('teacher',{
     justOne: false,
 });
 
+playList1.virtual('student',{
+    ref: 'studentModel',
+    localField: '_id',
+    foreignField: 'assign_course',
+    justOne: false,
+})
+
   playList1.set('toObject', { virtuals: true });
 
 const playList = database.model('playList',playList1);
