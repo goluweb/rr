@@ -94,7 +94,7 @@ app.get('/delete_chapter/:id',rolePermission('deleteChapter'),async (req,res)=>{
    
    const {id} = req.params;
    const data = await playListModel.deleteOne({_id:id});
-   res.redirect('/chapter/show_chapter,');
+   res.redirect('/chapter/show_chapter');
 })
 
 app.get('/status_chapter/:id/:status',rolePermission('statusChapter'),async (req,res)=>{
