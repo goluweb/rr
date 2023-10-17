@@ -73,8 +73,8 @@
                   <label>Mode<span class="required_">*</span></label>
                   <select class="form-control" name="mode_playlist" id="inputName" style="height:47px"  required>
                      <option  value="">-select mode-</option>
-                     <option <% if(playlist.mode_playlist.equals('live')){ %>selected<% } %> value="live">Live</option>
-                     <option <% if(playlist.mode_playlist.equals('upload')){ %>selected<% } %>  value="upload">Upload</option>                     
+                     <option <% if(playlist.mode_playlist =='live'){ %>selected<% } %> value="live">Live</option>
+                     <option <% if(playlist.mode_playlist =='upload'){ %>selected<% } %>  value="upload">Upload</option>                     
                   </select>
                </div>
 

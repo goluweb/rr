@@ -56,18 +56,23 @@ app.post('/addchapter',rolePermission('addChapter'),imageUpload.any(), async (re
   
 
 
-   for (let i=0; i < chapter_name.length; i++){
-    const chapter_insert = await chapterModel({
-         playlist_id:play._id,
-         chapter_name:chapter_name[i],
-         chapterDscription:chapterDscription[i],
-         notes:'',
-         mode:mode[i],
-         url:url[i],
-         lessionThumbnail:thumb[i].path,
-         lesstionStartDate:lesstionStartDate[i],
-         lessionEndDate:lessionEndDate[i]
-      }).save();
+   for (let i = 0; i < chapter_name.length; i++) {
+      const chapterData = {
+         playlist_id: play._id,
+         chapter_name: chapter_name[i],
+         chapterDscription: chapterDscription[i],
+         mode: mode[i],
+         url: url[i],
+         lesstionStartDate: lesstionStartDate[i],
+         lessionEndDate: lessionEndDate[i],
+      };
+   
+      if (thumb[i]) {
+         // If a thumbnail image is provided, insert it
+         chapterData.lessionThumbnail = thumb[i].path;
+      }
+   
+      const chapter_insert = await chapterModel(chapterData).save();
 
       if(mode[i] === 'upload'){
       await videosModel({

@@ -6,7 +6,8 @@ const multer = require('multer');
 app.post('/login', multer().none() , async (req, res) => {
     try {
       const { email, password } = req.body;
-      const user = await teacherModel.findOne({ email: email, password: password }).select({email,password});
+      var name = name;
+      const user = await teacherModel.findOne({ email: email, password: password });
     if (user) {
         res.status(200).json({ response: user });
     } else {
@@ -17,8 +18,8 @@ app.post('/login', multer().none() , async (req, res) => {
     }
  });
 
- app.post('/get_teacher_details',multer().none() ,async(req,res)=>{
-     const { teacher_id } = req.body; 
+ app.get('/get_teacher_details/:teacher_id' ,async(req,res)=>{
+     const { teacher_id } = req.params; 
      console.log(teacher_id)
      teacherModel.findOne({ _id: teacher_id }).populate('assign_course').then((data)=>{
       const response =  data.toObject();
@@ -28,8 +29,8 @@ app.post('/login', multer().none() , async (req, res) => {
      })
  })
 
- app.post('/get_teacher_chapter', multer().none(), async(req,res)=>{
-  const { teacher_id } = req.body; 
+ app.get('/get_teacher_chapter/:teacher_id', multer().none(), async(req,res)=>{
+  const { teacher_id } = req.params; 
   console.log(teacher_id)
   teacherModel.findOne({ _id: teacher_id }).populate({path:'assign_course',populate:{path:'chapters'}}).then((data)=>{
    const response =  data.toObject();
@@ -39,8 +40,8 @@ app.post('/login', multer().none() , async (req, res) => {
   })
 })
 
-app.post('/course_enroll_student', multer().none(), async(req,res)=>{
-  const { teacher_id } = req.body; 
+app.get('/course_enroll_student/:teacher_id', multer().none(), async(req,res)=>{
+  const { teacher_id } = req.params; 
   console.log(teacher_id)
   teacherModel.findOne({ _id: teacher_id }).populate({path:'assign_course',populate:{path:'student'}}).then((data)=>{
    const response =  data.toObject();
