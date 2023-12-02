@@ -83,7 +83,7 @@ const filter = (todoTask) => {
                 <h5 class="mb-0"></h5>
                 <div class="text-sm">
                   ${typeof todo.task_type !== "undefined" && todo.task_type !== null ? `
-                    <span class="text-muted"><a href="/task/view_task/${todo.task_type._id}" target="_blank" class="text-muted">${todo.task_type.task}</a></span>` : ` <span class="text-muted"></span>` }
+                    <span class="text-muted"><a href="/task/view_task/${todo.task_type._id}" target="_blank" class="text-muted">${todo.task_type.task} ( ${todo.task_type.task_status} )</a></span>` : ` <span class="text-muted"></span>` }
                 </div>
               </div>
               <div class="col-3 text-end" style="padding-left: 0px;">
