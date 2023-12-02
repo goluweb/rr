@@ -32,6 +32,11 @@ app.get('/update',rolePermission('addAtten'),async(req,res)=>{
    
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
+    const now = new Date();
+    const options = { timeZone: 'Asia/Kolkata' };
+    const ISTDateString = now.toLocaleString('en-US', options);
+
     attendance.findOneAndUpdate(
         {
           $and: [
@@ -44,7 +49,8 @@ app.get('/update',rolePermission('addAtten'),async(req,res)=>{
         {
           $set: {
             logout: true,
-            logout_date: new Date(),
+            logout_date: ISTDateString,
+           
           },
         }
       )
