@@ -65,6 +65,19 @@ chapter1.virtual('playlist',{
     foreignField:'_id',
     justOne: false,
 });
+chapter1.virtual('assignment',{
+    ref: 'assignment',
+    localField: '_id',
+    foreignField:'chapter_id',
+    justOne: false,
+});
+
+chapter1.virtual('get_assignment_assign',{
+    ref: 'assignment_assign',
+    localField: '_id',
+    foreignField:'chapter_id',
+    justOne: false,
+});
 
 chapter1.set('toObject', { virtuals: true });
 

@@ -90,6 +90,15 @@ const student = database.Schema({
 
 });
 
+student.virtual('assignment',{
+    ref: 'assignment',
+    localField: '_id',
+    foreignField:'chapter_id',
+    justOne: false,
+});
+
+student.set('toObject', { virtuals: true });
+
 const studentModel = database.model('studentModel',student);
 
 module.exports=studentModel;

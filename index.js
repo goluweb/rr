@@ -51,6 +51,7 @@ const adminSessionAuth = require(__dirname+'/App/middleware/adminAuthCheck'); //
 const todoController = require(__dirname+'/App/Controllers/admin/TodoController')
 const PaymentPlan = require(__dirname+'/App/Controllers/admin/PaymentPlan')
 const helper = require(__dirname+'/App/Helper/HelperClass'); //helper class
+const assign = require(__dirname+'/App/Controllers/admin/assignment.js');
 
 app.use(helper);
 
@@ -66,6 +67,8 @@ const mcq_api = require(__dirname+'/App/Controllers/api/mcq')
 const payment_page = require(__dirname+'/App/Controllers/api/payment_page')
 const LiveVideos = require(__dirname+'/App/Controllers/api/livevideos')
 const techerLogin = require(__dirname+'/App/Controllers/api/teacherLogin')
+const assignment_api = require(__dirname+'/App/Controllers/api/assignment')
+const student_class = require(__dirname+'/App/Controllers/api/student_class')
 
 app.use('/inquery',inqueryController);
 app.use('/api/register',Register);
@@ -76,11 +79,14 @@ app.use('/api/mcq',mcq_api)
 app.use('/api/payment_page',payment_page)
 app.use('/api/live',LiveVideos)
 app.use('/api/teacher_auth_login',techerLogin)
+app.use('/api/assignment',assignment_api)
+app.use('/api/student',student_class)
 // Api
-    
+
 app.get('/',(req,res)=>{
-  res.send('working1 fine');
+  res.send('working1 fine');     
 })
+
 app.use('/admin', Index_controllers);
 app.use('/dashboard',adminSessionAuth,dashboardController);
 app.use('/users',adminSessionAuth,userController);
@@ -95,7 +101,9 @@ app.use('/todo',adminSessionAuth,todoController);
 app.use('/attendance',adminSessionAuth,attendance)
 app.use('/payment',PaymentPlan);
 app.use('/mcq',adminSessionAuth,mcq)
+app.use('/assignments',adminSessionAuth,assign)
 
 
 app.listen(3000);   
 
+//how i can belevied that things which we dont love scr developer

@@ -7,7 +7,8 @@ const videosModel = require(__dirname+'/../../Models/videos_chapter');
 const chapterModel = require(__dirname+'/../../Models/chapter');
 const playListModel = require(__dirname+'/../../Models/playList');
 const rolePermission = require(__dirname+'/../../middleware/PermissionCheck'); //middleware for session check
-
+const multer = require('multer');
+const upload = multer();
 const imageUpload = require(__dirname+'/../../middleware/uploadImage');
 const { populate } = require(__dirname+'/../../Models/admin_login');
 const inArray = require('in-array'); 
@@ -53,35 +54,30 @@ app.post('/addchapter',rolePermission('addChapter'),imageUpload.any(), async (re
       startDate:startDate,
       endDate:endDate
    }).save();
-  
 
-
-   for (let i = 0; i < chapter_name.length; i++) {
-      const chapterData = {
+        const chapterData = {
          playlist_id: play._id,
-         chapter_name: chapter_name[i],
-         chapterDscription: chapterDscription[i],
-         mode: mode[i],
-         url: url[i],
-         lesstionStartDate: lesstionStartDate[i],
-         lessionEndDate: lessionEndDate[i],
+         chapter_name: chapter_name,
+         chapterDscription: chapterDscription,
+         mode: mode,
+         url: url,
+         lesstionStartDate: lesstionStartDate,
+         lessionEndDate: lessionEndDate,
       };
-   
-      if (thumb[i]) {
-         // If a thumbnail image is provided, insert it
-         chapterData.lessionThumbnail = thumb[i].path;
+      if (thumb) { // If a thumbnail image is provided, insert it
+         chapterData.lessionThumbnail = thumb.path;
       }
-   
       const chapter_insert = await chapterModel(chapterData).save();
 
-      if(mode[i] === 'upload'){
+      if(mode === 'upload'){
       await videosModel({
          chapter_id:chapter_insert._id,
-         lession_video: typeof videos[i] !== 'undefined' &&  videos[i] !== null ? videos[i].path : '',
+         lession_video: typeof videos !== 'undefined' &&  videos !== null ? videos.path : '',
       }).save();
    }
-}
-res.redirect('/chapter/show_chapter');
+
+res.send('data inserted!');
+
 })     
 
 app.get('/show_chapter',rolePermission('viewChapter'), async(req,res) =>{
@@ -197,5 +193,50 @@ app.post('/editchapter/:id',rolePermission('editChapter'), async(req,res)=>{
 
 })
 
+app.post('/inserted', rolePermission('editChapter'), imageUpload.fields([{ name: 'lessionThumbnail', maxCount: 1 }, { name: 'notes', maxCount: 1 }]), async (req, res) => {
+   console.log(req.body);
+
+   const { chapter_name, playlist_id, chapterDscription, mode, lesstionStartDate, lessionEndDate, url } = req.body;
+
+   const chapterData = {
+      playlist_id: playlist_id,
+      chapter_name: chapter_name,
+      chapterDscription: chapterDscription,
+      mode: mode,
+      url: url,
+      lessionThumbnail: req.files.lessionThumbnail ? req.files.lessionThumbnail[0].path : '',
+      notes: req.files.notes ? req.files.notes[0].path : '',
+      lesstionStartDate: lesstionStartDate,
+      lessionEndDate: lessionEndDate,  
+   };
+
+   const chapter_insert = await chapterModel(chapterData).save();
+
+   res.redirect('/chapter/edit_chapter/' + playlist_id);
+});
+
+
+app.get('/delete_chapter/:id/:playlist_id', async (req, res) => {
+   const { id, playlist_id } = req.params;
+ 
+   try {
+     const deletedChapter = await chapterModel.findByIdAndDelete(id);
+ 
+     if (!deletedChapter) {
+       // Handle the case where the chapter is not found
+       res.status(404).send('Chapter not found');
+     } else {
+       // Redirect to the edit page for the associated playlist
+       res.redirect(`/chapter/edit_chapter/${playlist_id}`);
+     }
+   } catch (error) {
+     // Handle errors, such as database errors
+     console.error(error);
+     res.status(500).send('Internal Server Error');
+   }
+ });
+ 
+
 module.exports=app;
 
+ 

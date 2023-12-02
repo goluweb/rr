@@ -19,5 +19,4 @@ const rolesSchema = new database.Schema({
 });
 
 const roles = database.model('roles',rolesSchema);
-
 module.exports=roles;

@@ -1,4 +1,4 @@
-var database = require(__dirname+'/../../config/Database');
+const database = require(__dirname+'/../../config/Database');
 
 const bankDetails = database.Schema({
 

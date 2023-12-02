@@ -1,0 +1,75 @@
+<%- include ('../layout/header.ejs') %>
+
+<style>
+    html body .label-info {
+    background: #01b2ac !important;
+}
+    </style>
+    <!-- <% if(typeof error != 'undefined'){ %>
+    <div style="text-align: center;"><p><%= error %></p></div>
+    <% } %> -->
+                            <div class="row justify-content-center" style="margin:20px">
+                            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<div class="card  box-shadow-0">
+								<div class="card-header d-flex justify-content-between" style="padding-top:15px">
+                                  <h4 class="card-title mb-1">Edit Assignment</h4>
+                                  <a href="/assignments/show_assignment" class="btn btn-primary">Back</a>
+								</div>
+                          
+                                <div style="text-align:center;"><p class="popular_job_show"></p></div>
+								<div class="card-body pt-0" >
+									<form  method="post" action="/assignments/edit_assignment"  enctype="multipart/form-data">
+                              
+										<br>
+                                             <input type="hidden" name="assign_id" value="<%= assign._id %>">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group" >
+                                                <label>Enter Title <span class="required_">*</span></label>
+                                                    <input type="text" class="form-control" value="<%= assign.name %>" name="title" id="inputName" placeholder="title"  required>
+                                                      
+                                                </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group" >
+                                                    <label>Select Chapter <span class="required_">*</span></label>
+                                                        <select type="text" class="form-control" name="playlist_id" id="inputName"  required style="height: 47px;" required>
+                                                            <option value="">-select playlist-</option>
+                                                            <% data.forEach((playlist) => { %>
+                                                                <option <%= assign.chapter_id == playlist._id ? 'selected' : '' %> value="<%= playlist._id %>"><%= playlist.chapter_name %></option>
+                                                            <% }) %>
+                                                                                                       
+                                                        </select>
+                                                    </div>
+                                                    </div>
+
+                                                        <div class="col-md-4">
+                                                        <div class="form-group" >
+                                                        <label>Select Type <span class="required_">*</span></label>
+                                                            <select type="text" class="form-control" name="type" id="inputName"  required style="height: 47px;" required>
+                                                            <option  value="">-select type-</option>
+                                                            <option <%= assign.type == 'home_work' ? 'selected' : '' %>  value="home_work">home work</option>
+                                                            <option  <%= assign.type == 'class_work' ? 'selected' : '' %>   value="class_work">class work</option>
+                                                            <option  <%= assign.type == 'orlas' ? 'selected' : '' %>   value="orlas">orlas</option>
+                                                            <option  <%= assign.type == 'question' ? 'selected' : '' %>  value="question">question on screen</option>
+                                                            </select>
+                                                        </div>
+                                                        </div>
+                                            <div class="form-group mb-0 mt-3 justify-content-end">
+                                            <div><br>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    
+                                            </div>
+                                            </div>
+                                    
+									</form>
+
+								</div>
+							</div>
+						</div>
+                    </div>
+
+<%- include ('../layout/footer.ejs') %>
+
+

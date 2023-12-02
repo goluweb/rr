@@ -12,12 +12,17 @@ const rolePermission = require(__dirname+'/../../middleware/PermissionCheck');
 app.get('/show_todo',rolePermission('viewTodo'),async(req,res)=>{
 var todoTask;
 const user = await loginModel.find()
+
 const task = await tastModel.find()
 
   if(req.session.user.roles_id.roles === 'admin'){
+
       todoTask = await todoModel.find().populate('user_id').populate('task_type').sort('-_id')
+
   }else{
+
      todoTask = await todoModel.find({user_id:req.session.user._id}).populate('user_id').populate('task_type').sort('-_id')
+
   }
 
     res.render('admin/todo/show_todo',{inArray:inArray,todoTask:todoTask,user:user,task:task});

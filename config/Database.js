@@ -1,9 +1,9 @@
 const mongoose =  require('mongoose');
-require('dotenv').config();
-const database = process.env.DB_NAME;
 
 
-mongoose.connect('mongodb+srv://webdeveloper1:IK9ez3LQ91YwQU7F@cluster0.6qnw3vh.mongodb.net/myDatabase?retryWrites=true&w=majority',{
+// mongodb://localhost:27017
+// mongodb+srv://webdeveloper1:IK9ez3LQ91YwQU7F@cluster0.6qnw3vh.mongodb.net/myDatabase?retryWrites=true&w=majority'
+mongoose.connect('mongodb://localhost:27017/mydatabase',{
     useNewUrlParser:true,
     useUnifiedTopology:true
 }).then(() => {

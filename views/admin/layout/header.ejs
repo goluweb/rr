@@ -45,6 +45,7 @@
 }
 
     </style>
+ <!-- <% path='https://node-project-rc3o.onrender.com/' %> -->
  <% path='https://node-project-rc3o.onrender.com/' %>
 
 
@@ -476,6 +477,7 @@
           <% } %>
 
 
+
           <% if(inArray(locals.usersession.roles_id.permission,'viewCourse')  || inArray(locals.usersession.roles_id.permission,'viewLevel') || inArray(locals.usersession.roles_id.permission,'viewChapter')){ %>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#slider" aria-expanded="false" aria-controls="slider">
@@ -504,6 +506,41 @@
             </div>
           </li>
           <% } %>
+
+
+
+          <!-- Assignment -->
+
+          <% if(inArray(locals.usersession.roles_id.permission,'viewCourse')  || inArray(locals.usersession.roles_id.permission,'viewLevel') || inArray(locals.usersession.roles_id.permission,'viewChapter')){ %>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#slider" aria-expanded="false" aria-controls="slider">
+                <i class="typcn typcn-film menu-icon"></i>
+                <span class="menu-title">Assignment & Work </span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="slider">
+                <ul class="nav flex-column sub-menu">
+                  <% if(inArray(locals.usersession.roles_id.permission,'viewCourse')){ %>
+                  <li class="nav-item"><a class="nav-link" href="/assignments/show_assignment">Assignment</a></li>
+                  <% } %>
+  
+                  <!-- <li class="nav-item"><a class="nav-link" href="/payment/show_payment">Course fee</a></li>
+  
+                  <li class="nav-item"><a class="nav-link" href="/payment/coupons">Coupons</a></li>
+  
+  
+                  <% if(inArray(locals.usersession.roles_id.permission,'viewLevel')){ %>
+                  <li class="nav-item"><a class="nav-link" href="/level/show_level">Levels</a></li>
+                  <% } %>
+                  <% if(inArray(locals.usersession.roles_id.permission,'viewChapter')){ %>
+                  <li class="nav-item"><a class="nav-link" href="/chapter/show_chapter">Chapters</a></li>
+                  <% } %> -->
+                </ul>
+              </div>
+            </li>
+            <% } %>
+
+          <!-- Assignment -->
 
 
           <li class="nav-item">

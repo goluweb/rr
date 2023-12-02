@@ -35,7 +35,7 @@
                   <div class="form-group" >
                      <label>Select level <span class="required_">*</span></label>
                      <select class="form-control" name="level_id" id="inputName" style="height:47px"  required>
-                        <option value="">-select level-</option>
+                        <option value="">-select level-</option>     
                         <% lavel.forEach(function(lavel){ %>
                         <option value="<%= lavel._id %>"><%= lavel.levelName %></option>
                         <% }) %>
@@ -101,25 +101,25 @@
                         <div class="col-md-12">
                             <div class="form-group" >
                                <label>Chapter Name<span class="required_">*</span></label>
-                               <input type="text" class="form-control" name="chapter_name[]" id="inputName" placeholder="Enter Chapter Name" required>
+                               <input type="text" class="form-control" name="chapter_name" id="inputName" placeholder="Enter Chapter Name" required>
                             </div>
                          </div>
                          <div class="col-md-12">
                             <div class="form-group" >
                                <label>Discription<span class="required_">*</span></label>
-                               <textarea type="text" class="form-control" name="chapterDscription[]" id="inputName" placeholder="Enter Discription Name" required></textarea>
+                               <textarea type="text" class="form-control" name="chapterDscription" id="inputName" placeholder="Enter Discription Name" required></textarea>
                             </div>
                          </div>
                          <div class="col-md-6">
                             <div class="form-group" >
                                <label>Upload Notes (related to Lession)<span class="required_"> </span></label>
-                               <input type="file" class="form-control" name="notes[]" id="inputName" multiple  >
+                               <input type="file" class="form-control" name="notes" id="inputName" multiple  >
                             </div>
                          </div>
                          <div class="col-md-6">
                             <div class="form-group" >
                                <label>select Mode<span class="required_">*</span></label>
-                               <select class="form-control" onchange="uploadVideo(this.value,'unique_0')" name="mode[]" id="" style="height: 47px;" required>
+                               <select class="form-control" onchange="uploadVideo(this.value,'unique_0')" name="mode" id="" style="height: 47px;" required>
                                 <option value="">-select mode-</option> 
                                 <option value="live">live</option>
                                 <option value="upload">upload</option>
@@ -130,7 +130,7 @@
                          <div class="col-md-12">
                            <div class="form-group" >
                               <label> Url<span class="required_"> *</span></label>
-                              <input type="text" class="form-control" name="url[]" id="inputName" multiple  required>
+                              <input type="text" class="form-control" name="url" id="inputName" multiple  required>
                            </div>
                         </div>
 
@@ -138,23 +138,23 @@
                          <div class="col-md-4">
                             <div class="form-group" >
                                <label>Lession Thumbnail<span class="required_">*</span></label>
-                               <input type="file" class="form-control" name="lessionThumbnail[]" id="inputName" multiple required>
+                               <input type="file" class="form-control" name="lessionThumbnail" id="inputName" multiple required>
                             </div>
                          </div>
                          <div class="col-md-4">
                             <div class="form-group" >
                                <label>Start Date & time<span class="required_">*</span></label>
-                               <input type="datetime-local" class="form-control" name="lesstionStartDate[]" id="inputName" required>
+                               <input type="datetime-local" class="form-control" name="lesstionStartDate" id="inputName" required>
                             </div>
                          </div>
                          <div class="col-md-4">
                             <div class="form-group" >
                                <label>End Date & time<span class="required_">*</span></label>
-                               <input type="datetime-local" class="form-control" name="lessionEndDate[]" id="inputName" required>
+                               <input type="datetime-local" class="form-control" name="lessionEndDate" id="inputName" required>
                             </div>
                            </div>
                            
-                           <div style="text-align: end;"> <button type="button" onclick="appendData()" class="btn btn-success">Add More +</button></div>
+                           <!-- <div style="text-align: end;"> <button type="button" onclick="appendData()" class="btn btn-success">Add More +</button></div> -->
                           </div>
                           <br>
                           </div>
