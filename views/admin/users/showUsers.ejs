@@ -76,7 +76,7 @@
                           <% } %>
                           <% } %>
                         
-                          <% if(inArray(locals.usersession.roles_id.permission,'editUser')){ %>
+                          <% if(inArray(locals.usersession.roles_id.permission,'editUser') &&   user.data[0].roles != 'admin' ){ %>
                           <a href="/users/edit_user/<%= user._id %>" data-toggle="tooltip" data-placement="top" title="edit button" style="background-color:blue" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                           <% } %>
                           </td>
