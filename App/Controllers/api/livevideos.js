@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
-
+const multer = require('multer')
 const clientId = '2QzXoasoQBimWPtbXIsg';
 const clientSecret = '7JP72COlmOyFbFjSOETepQr3eyADgp4G';
 const redirectUri = 'https://node-project-rc3o.onrender.com/api/live/callback';
@@ -58,33 +58,43 @@ app.get('/callback', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-app.post('/golive', async (req, res) => {
+app.post('/golive', multer().none(),async (req, res) => {
   try {
-    const {token} = req.body
+    const { token } = req.body;
+    
+    // Assuming refreshAccessToken is a valid function that returns a new access token
     const refreshToken = token;
     const accessToken = await refreshAccessToken(refreshToken);
 
     const meetingParams = {
       host_id: 'me',
-      topic: 'dinesh Pahadi',
+      topic: 'dinesh ',
       type: 2,
       start_time: '2023-08-05T12:00:00Z',
-      timezone: 'IST',
+      timezone: 'Asia/Kolkata', // Use a valid timezone identifier
     };
 
-    const response = await axios.post('https://api.zoom.us/v2/users/me/meetings', meetingParams, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.post(
+      'https://api.zoom.us/v2/users/me/meetings',
+      meetingParams,
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     console.log('Meeting created:', response.data);
     res.json(response.data);
   } catch (error) {
     console.error('Error creating meeting:', error);
+
+    // Log the error details for debugging
+    console.error('Error details:', error.response?.data);
+
     res.status(error.response?.status || 500).json(error.response?.data || { message: 'Internal Server Error' });
   }
 });
+
 
 module.exports = app;
