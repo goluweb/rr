@@ -12,7 +12,7 @@ async function refreshAccessToken(refreshToken) {
     const response = await axios.post('https://zoom.us/oauth/token', null, {
       params: {
         grant_type: 'refresh_token',
-        refresh_token: refreshToken, 
+        refresh_token: refreshToken,
         client_id: clientId,
         client_secret: clientSecret,
       },
@@ -46,7 +46,8 @@ app.get('/callback', async (req, res) => {
     const refreshToken = tokenResponse.data.refresh_token;
     console.log(accessToken)
     console.log("refresh"+refreshToken)
-    const  token={
+    // Save the refresh token securely for future use
+   const  token={
          accessToken:accessToken,
          refreshToken:refreshToken
       }
@@ -60,8 +61,8 @@ app.get('/callback', async (req, res) => {
 
 app.post('/golive', async (req, res) => {
   try {
-    // Replace <your_refresh_token> with the actual refresh token obtained during OAuth
-    const refreshToken = 'eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6ImNlODg1YmUyLWJlNTAtNDZhNy1iOWEyLWY2YTRmNjBiNzA4OCJ9.eyJ2ZXIiOjksImF1aWQiOiJhZGNhOThiNzM4OGVjYzg4OThmNmViZmU2MGI3ODZmNyIsImNvZGUiOiJEV2xSTWhjc3dRZEFVRmZCdGQxUTltaU1ycjFVWTh1X0EiLCJpc3MiOiJ6bTpjaWQ6MlF6WG9hc29RQmltV1B0YlhJc2ciLCJnbm8iOjAsInR5cGUiOjEsInRpZCI6MCwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiUS03VkxIaWVSLVdNdThTU292M2NqQSIsIm5iZiI6MTcwMTg0ODY3OCwiZXhwIjoxNzA5NjI0Njc4LCJpYXQiOjE3MDE4NDg2NzgsImFpZCI6ImZCTFVGS3JHUldXZVg1LTA3TWRQb2cifQ.9B3rBRbV-AIODuXvbukCENRyKQEMS-us_cf20xMliuM8xOwBXpwoTSnl_X-GpaXFV3cDG3yHMRkxII8gprUGQg';
+    const {token} = req.body
+    const refreshToken = token;
     const accessToken = await refreshAccessToken(refreshToken);
 
     const meetingParams = {
