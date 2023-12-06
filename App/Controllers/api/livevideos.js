@@ -12,7 +12,7 @@ async function refreshAccessToken(refreshToken) {
     const response = await axios.post('https://zoom.us/oauth/token', null, {
       params: {
         grant_type: 'refresh_token',
-        refresh_token: refreshToken,
+        refresh_token: refreshToken, 
         client_id: clientId,
         client_secret: clientSecret,
       },
@@ -46,10 +46,12 @@ app.get('/callback', async (req, res) => {
     const refreshToken = tokenResponse.data.refresh_token;
     console.log(accessToken)
     console.log("refresh"+refreshToken)
-    // Save the refresh token securely for future use
-
+    const  token={
+         accessToken:accessToken,
+         refreshToken:refreshToken
+      }
     // Redirect to a success page or handle as needed
-    res.send('Authorization successful');
+    res.status(200).send({response: token });
   } catch (error) {
     console.error('Error during OAuth callback:', error);
     res.status(500).send('Internal Server Error');
